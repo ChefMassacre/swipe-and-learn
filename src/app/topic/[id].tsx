@@ -6,7 +6,7 @@ import { Button, Card, H1, Muted, ProgressBar } from '../../components/ui';
 import { categoryById, topicById } from '../../data/topics';
 import { useStore } from '../../lib/store';
 import { canPlay, topicProgress } from '../../lib/selectors';
-import { colors, radius } from '../../lib/theme';
+import { F, colors, radius } from '../../lib/theme';
 
 const MODES = [
   { id: 'flip', title: 'Classic', desc: 'Guess in your head, flip, and swipe.' },
@@ -83,15 +83,15 @@ function Mini({ n, label }: { n: number; label: string }) {
 const styles = StyleSheet.create({
   screen: { flex: 1, backgroundColor: colors.bg },
   body: { padding: 20, gap: 8 },
-  emojiBox: { width: 96, height: 96, borderRadius: 28, alignItems: 'center', justifyContent: 'center', marginBottom: 8 },
-  cat: { fontWeight: '800', textTransform: 'uppercase', fontSize: 12, letterSpacing: 1 },
+  emojiBox: { width: 104, height: 104, borderRadius: 32, borderWidth: 4, borderColor: '#fff', alignItems: 'center', justifyContent: 'center', marginBottom: 8 },
+  cat: { fontFamily: F.extra, textTransform: 'uppercase', fontSize: 12, letterSpacing: 1 },
   row: { flexDirection: 'row', justifyContent: 'space-between' },
   statsRow: { flexDirection: 'row', marginTop: 4 },
-  label: { fontWeight: '800', color: colors.ink, fontSize: 15 },
-  value: { fontWeight: '900', color: colors.ink, fontSize: 18 },
-  mode: { flexDirection: 'row', gap: 14, alignItems: 'center', backgroundColor: colors.card, borderRadius: radius.md, padding: 16, borderWidth: 2, borderColor: colors.line },
+  label: { fontFamily: F.extra, color: colors.ink, fontSize: 15 },
+  value: { fontFamily: F.black, color: colors.ink, fontSize: 18 },
+  mode: { flexDirection: 'row', gap: 14, alignItems: 'center', backgroundColor: colors.card, borderRadius: radius.md, padding: 16, borderWidth: 2, borderBottomWidth: 5, borderColor: colors.lineDark },
   modeOn: { borderColor: colors.primary, backgroundColor: colors.primarySoft },
   radio: { width: 22, height: 22, borderRadius: 11, borderWidth: 2, borderColor: colors.line, backgroundColor: '#fff' },
-  modeTitle: { fontWeight: '800', fontSize: 16, color: colors.ink },
+  modeTitle: { fontFamily: F.extra, fontSize: 16, color: colors.ink },
   footer: { padding: 20 },
 });

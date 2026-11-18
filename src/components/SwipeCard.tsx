@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useRef } from 'react';
 import { Animated, Dimensions, PanResponder, Pressable, StyleSheet, Text, View } from 'react-native';
-import { colors, radius, shadow } from '../lib/theme';
+import { F, colors, radius, shadow } from '../lib/theme';
 
 export type SwipeDir = 'right' | 'left' | 'up';
 
@@ -110,11 +110,13 @@ const styles = StyleSheet.create({
     borderRadius: radius.lg,
     overflow: 'hidden',
     backfaceVisibility: 'hidden',
+    borderWidth: 2,
+    borderColor: colors.line,
     ...shadow,
   },
-  stamp: { position: 'absolute', borderWidth: 4, borderRadius: 10, paddingHorizontal: 12, paddingVertical: 6, backgroundColor: '#ffffffee' },
+  stamp: { position: 'absolute', borderWidth: 5, borderRadius: 14, paddingHorizontal: 12, paddingVertical: 6, backgroundColor: '#ffffffee' },
   stampLeft: { top: 28, left: 22, transform: [{ rotate: '-12deg' }] },
   stampRight: { top: 28, right: 22, transform: [{ rotate: '12deg' }] },
   stampBottom: { bottom: 40, alignSelf: 'center' },
-  stampText: { fontSize: 26, fontWeight: '900', letterSpacing: 1 },
+  stampText: { fontSize: 26, fontFamily: F.black, letterSpacing: 1 },
 });

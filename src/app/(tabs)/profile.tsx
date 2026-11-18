@@ -6,7 +6,7 @@ import { Button, Card, Chip, H1, H2, Muted } from '../../components/ui';
 import { TOPICS } from '../../data/topics';
 import { useStore } from '../../lib/store';
 import { currentStreak, isMastered, levelFor } from '../../lib/srs';
-import { colors } from '../../lib/theme';
+import { F, colors } from '../../lib/theme';
 
 const ACHIEVEMENTS = [
   { id: 'first', emoji: '🌱', title: 'First round', test: (s: Stats) => s.sessions >= 1 },
@@ -106,8 +106,8 @@ const styles = StyleSheet.create({
   avatar: { width: 54, height: 54, borderRadius: 27, backgroundColor: colors.primarySoft, alignItems: 'center', justifyContent: 'center' },
   badges: { flexDirection: 'row', flexWrap: 'wrap', gap: 10 },
   badge: { width: '30%', backgroundColor: colors.card, borderRadius: 16, padding: 12, alignItems: 'center', gap: 4 },
-  badgeText: { fontSize: 12, fontWeight: '700', color: colors.ink, textAlign: 'center' },
+  badgeText: { fontSize: 12, fontFamily: F.bold, color: colors.ink, textAlign: 'center' },
   chips: { flexDirection: 'row', flexWrap: 'wrap', marginHorizontal: -4 },
   devRow: { flexDirection: 'row', alignItems: 'center', gap: 12 },
-  devTitle: { fontWeight: '800', color: colors.ink, fontSize: 15 },
+  devTitle: { fontFamily: F.extra, color: colors.ink, fontSize: 15 },
 });

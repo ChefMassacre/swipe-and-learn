@@ -1,12 +1,18 @@
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { View } from 'react-native';
+import { useFonts } from 'expo-font';
+import { Nunito_600SemiBold, Nunito_700Bold, Nunito_800ExtraBold, Nunito_900Black } from '@expo-google-fonts/nunito';
+import { Fraunces_700Bold, Fraunces_900Black } from '@expo-google-fonts/fraunces';
 import { StoreProvider, useStore } from '../lib/store';
-import { colors } from '../lib/theme';
+import { colors, F } from '../lib/theme';
 
 function Root() {
   const { ready } = useStore();
-  if (!ready) return <View style={{ flex: 1, backgroundColor: colors.bg }} />;
+  const [fontsLoaded, fontError] = useFonts({
+    Nunito_600SemiBold, Nunito_700Bold, Nunito_800ExtraBold, Nunito_900Black, Fraunces_700Bold, Fraunces_900Black,
+  });
+  if (!ready || (!fontsLoaded && !fontError)) return <View style={{ flex: 1, backgroundColor: colors.bg }} />;
   return (
     <>
       <StatusBar style="dark" />
@@ -15,7 +21,7 @@ function Root() {
           headerShadowVisible: false,
           headerStyle: { backgroundColor: colors.bg },
           headerTintColor: colors.ink,
-          headerTitleStyle: { fontWeight: '800' },
+          headerTitleStyle: { fontFamily: F.display, fontSize: 20 },
           contentStyle: { backgroundColor: colors.bg },
           headerBackTitle: 'Back',
         }}

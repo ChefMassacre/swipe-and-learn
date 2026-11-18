@@ -3,7 +3,7 @@ import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { router } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Card, H1, H2, Muted } from '../../components/ui';
-import { colors, radius } from '../../lib/theme';
+import { F, colors, radius } from '../../lib/theme';
 
 export default function Compete() {
   return (
@@ -43,8 +43,8 @@ const styles = StyleSheet.create({
   screen: { flex: 1, backgroundColor: colors.bg },
   body: { padding: 20, gap: 16 },
   hero: { backgroundColor: '#16142B', borderRadius: radius.lg, padding: 22, gap: 8 },
-  heroTitle: { color: '#fff', fontSize: 28, fontWeight: '900' },
+  heroTitle: { color: '#fff', fontSize: 28, fontFamily: F.black },
   heroSub: { color: '#ffffffc0', fontSize: 15, lineHeight: 21 },
   heroBtn: { alignSelf: 'flex-start', backgroundColor: colors.gold, borderRadius: 999, paddingHorizontal: 18, paddingVertical: 10, marginTop: 8 },
-  heroBtnText: { color: '#16142B', fontWeight: '900', fontSize: 16 },
+  heroBtnText: { color: '#16142B', fontFamily: F.black, fontSize: 16 },
 });

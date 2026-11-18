@@ -3,7 +3,7 @@ import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { router } from 'expo-router';
 import { Button, Card, H1, Muted } from '../components/ui';
 import { useStore } from '../lib/store';
-import { colors } from '../lib/theme';
+import { F, colors } from '../lib/theme';
 
 // Placeholder paywall. Real purchases (subscription + one-time unlock) will go
 // through RevenueCat or expo-iap; see docs/PRODUCT_SPEC.md "Monetization".
@@ -40,7 +40,7 @@ export default function Paywall() {
 
 const styles = StyleSheet.create({
   body: { padding: 24, gap: 12, backgroundColor: colors.bg, flexGrow: 1 },
-  feature: { fontSize: 16, fontWeight: '600', color: colors.ink },
+  feature: { fontSize: 16, fontFamily: F.body, color: colors.ink },
   plan: { gap: 2 },
-  planTitle: { fontWeight: '900', fontSize: 18, color: colors.ink },
+  planTitle: { fontFamily: F.black, fontSize: 18, color: colors.ink },
 });

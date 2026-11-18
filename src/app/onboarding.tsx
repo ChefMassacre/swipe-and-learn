@@ -5,7 +5,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Button, Chip, H1, Muted, ProgressBar } from '../components/ui';
 import { CATEGORIES, TOPICS } from '../data/topics';
 import { useStore } from '../lib/store';
-import { colors, radius } from '../lib/theme';
+import { F, colors, radius } from '../lib/theme';
 
 const GOALS = [
   { id: 'trivia', label: '🏆  Win at trivia night' },
@@ -46,8 +46,12 @@ export default function Onboarding() {
 
       {step === 0 && (
         <View style={styles.hero}>
-          <Text style={{ fontSize: 84 }}>🃏</Text>
-          <H1 style={{ textAlign: 'center' }}>Swipe&Learn</H1>
+          <View style={styles.heroArt}>
+            <View style={[styles.heroCard, { backgroundColor: colors.sky, transform: [{ rotate: '-14deg' }, { translateX: -46 }] }]}><Text style={styles.heroEmoji}>🏛️</Text></View>
+            <View style={[styles.heroCard, { backgroundColor: colors.gold, transform: [{ rotate: '12deg' }, { translateX: 46 }] }]}><Text style={styles.heroEmoji}>🚜</Text></View>
+            <View style={[styles.heroCard, { backgroundColor: colors.primary }]}><Text style={styles.heroEmoji}>🎮</Text></View>
+          </View>
+          <H1 style={{ textAlign: 'center', fontSize: 40, lineHeight: 46 }}>Swipe&Learn</H1>
           <Muted style={{ textAlign: 'center', fontSize: 17 }}>
             Learn about the world one swipe at a time. Consoles, philosophers, machines, fabrics and more.
           </Muted>
@@ -150,9 +154,9 @@ function Option({ label, selected, onPress }: { label: string; selected: boolean
 function Legend({ icon, color, bg, title, text }: { icon: string; color: string; bg: string; title: string; text: string }) {
   return (
     <View style={styles.legend}>
-      <View style={[styles.legendIcon, { backgroundColor: bg }]}><Text style={{ color, fontSize: 24, fontWeight: '900' }}>{icon}</Text></View>
+      <View style={[styles.legendIcon, { backgroundColor: bg }]}><Text style={{ color, fontSize: 24, fontFamily: F.black }}>{icon}</Text></View>
       <View style={{ flex: 1 }}>
-        <Text style={{ fontWeight: '800', fontSize: 16, color }}>{title}</Text>
+        <Text style={{ fontFamily: F.extra, fontSize: 16, color }}>{title}</Text>
         <Muted>{text}</Muted>
       </View>
     </View>
@@ -163,20 +167,23 @@ const styles = StyleSheet.create({
   screen: { flex: 1, backgroundColor: colors.bg },
   top: { flexDirection: 'row', alignItems: 'center', gap: 14, paddingHorizontal: 20, paddingTop: 8 },
   back: { fontSize: 34, color: colors.ink, marginTop: -6 },
-  hero: { flex: 1, alignItems: 'center', padding: 28, paddingTop: 80, gap: 12 },
+  hero: { flex: 1, alignItems: 'center', padding: 28, paddingTop: 60, gap: 12 },
+  heroArt: { height: 200, width: 260, alignItems: 'center', justifyContent: 'center', marginBottom: 12 },
+  heroCard: { position: 'absolute', width: 120, height: 160, borderRadius: 24, alignItems: 'center', justifyContent: 'center', borderWidth: 4, borderColor: '#fff', shadowColor: '#2B1E5C', shadowOpacity: 0.15, shadowRadius: 14, shadowOffset: { width: 0, height: 8 }, elevation: 4 },
+  heroEmoji: { fontSize: 56 },
   body: { flexGrow: 1, flex: 1, padding: 24, gap: 6 },
   footer: { padding: 20 },
   option: {
     backgroundColor: colors.card, borderRadius: radius.md, padding: 18,
-    borderWidth: 2, borderColor: colors.line,
+    borderWidth: 2, borderBottomWidth: 5, borderColor: colors.lineDark,
   },
-  optionText: { fontSize: 17, fontWeight: '700', color: colors.ink },
-  cat: { fontSize: 13, fontWeight: '800', textTransform: 'uppercase', letterSpacing: 1, color: colors.muted, marginBottom: 6 },
+  optionText: { fontSize: 17, fontFamily: F.extra, color: colors.ink },
+  cat: { fontSize: 13, fontFamily: F.extra, textTransform: 'uppercase', letterSpacing: 1, color: colors.muted, marginBottom: 6 },
   chips: { flexDirection: 'row', flexWrap: 'wrap', marginHorizontal: -4 },
   input: {
     backgroundColor: colors.card, borderRadius: radius.md, padding: 14, fontSize: 16,
     borderWidth: 1.5, borderColor: colors.line, color: colors.ink,
   },
-  legend: { flexDirection: 'row', gap: 14, alignItems: 'center', backgroundColor: colors.card, padding: 14, borderRadius: radius.md },
+  legend: { flexDirection: 'row', gap: 14, alignItems: 'center', backgroundColor: colors.card, padding: 14, borderRadius: radius.md, borderWidth: 2, borderColor: colors.line },
   legendIcon: { width: 48, height: 48, borderRadius: 24, alignItems: 'center', justifyContent: 'center' },
 });

@@ -6,7 +6,7 @@ import { playableTopics } from '../../data/topics';
 import { useStore } from '../../lib/store';
 import { canPlay } from '../../lib/selectors';
 import { hostSyncAvailable } from '../../lib/partySync';
-import { colors, radius } from '../../lib/theme';
+import { F, colors, radius } from '../../lib/theme';
 
 const CLOCKS = [30, 45, 60, 90];
 
@@ -103,10 +103,10 @@ export default function PartySetup() {
 
 const styles = StyleSheet.create({
   body: { padding: 20, gap: 8, paddingBottom: 30 },
-  label: { fontWeight: '800', color: colors.ink, fontSize: 15, marginTop: 14 },
+  label: { fontFamily: F.extra, color: colors.ink, fontSize: 15, marginTop: 14 },
   chips: { flexDirection: 'row', flexWrap: 'wrap', marginHorizontal: -4 },
   input: { backgroundColor: colors.card, borderRadius: radius.md, padding: 14, fontSize: 16, borderWidth: 2, color: colors.ink },
   tip: { backgroundColor: colors.card, borderRadius: radius.md, padding: 16, gap: 6, marginTop: 16 },
-  tipTitle: { fontWeight: '800', color: colors.ink, fontSize: 15 },
+  tipTitle: { fontFamily: F.extra, color: colors.ink, fontSize: 15 },
   footer: { padding: 20 },
 });

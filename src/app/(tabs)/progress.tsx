@@ -6,7 +6,7 @@ import { categoryById, playableTopics, topicById } from '../../data/topics';
 import { useStore } from '../../lib/store';
 import { allDueCardIds, topicProgress } from '../../lib/selectors';
 import { currentStreak, isMastered, levelFor } from '../../lib/srs';
-import { colors } from '../../lib/theme';
+import { F, colors } from '../../lib/theme';
 
 export default function Progress() {
   const { state } = useStore();
@@ -88,11 +88,11 @@ const styles = StyleSheet.create({
   body: { padding: 20, gap: 14, paddingBottom: 40 },
   stats: { flexDirection: 'row', flexWrap: 'wrap', gap: 12 },
   stat: { width: '47%', padding: 16, gap: 2 },
-  statValue: { fontSize: 24, fontWeight: '900', color: colors.ink },
+  statValue: { fontSize: 24, fontFamily: F.black, color: colors.ink },
   topicRow: { flexDirection: 'row', gap: 12, alignItems: 'center', backgroundColor: colors.card, padding: 14, borderRadius: 16 },
   topicHead: { flexDirection: 'row', justifyContent: 'space-between' },
-  topicTitle: { fontWeight: '800', fontSize: 15, color: colors.ink },
-  pct: { fontWeight: '800', color: colors.ink },
+  topicTitle: { fontFamily: F.extra, fontSize: 15, color: colors.ink },
+  pct: { fontFamily: F.extra, color: colors.ink },
   histRow: { flexDirection: 'row', alignItems: 'center', gap: 12, paddingVertical: 8, borderBottomWidth: 1, borderBottomColor: colors.line },
-  xp: { fontWeight: '800', color: colors.gold, minWidth: 60, textAlign: 'right' },
+  xp: { fontFamily: F.extra, color: colors.gold, minWidth: 60, textAlign: 'right' },
 });

@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { Animated, Easing } from 'react-native';
 import { ActivityIndicator, KeyboardAvoidingView, Linking, Platform, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import { Image } from 'expo-image';
 import { router, Stack, useLocalSearchParams } from 'expo-router';
@@ -13,7 +14,7 @@ import { dailyPool } from '../../lib/selectors';
 import { prefetchWiki, useWiki } from '../../lib/wiki';
 import { useCardPicture, CardPicture } from '../../lib/cardImage';
 import { hasApprovedImage } from '../../data/topics';
-import { colors, radius } from '../../lib/theme';
+import { F, colors, darker, radius } from '../../lib/theme';
 
 const SESSION_SIZE = 10;
 
@@ -41,6 +42,13 @@ export default function Play() {
   const [typedCorrect, setTypedCorrect] = useState<boolean | null>(null);
   const tally = useRef({ knew: 0, forgot: 0, skipped: 0, xp: 0 });
   const swipeRef = useRef<((d: SwipeDir) => void) | null>(null);
+  const [combo, setCombo] = useState(0);
+  const [pops, setPops] = useState<{ id: number; text: string; color: string }[]>([]);
+  const pop = (text: string, color: string) => {
+    const id = Date.now() + Math.random();
+    setPops((ps) => [...ps, { id, text, color }]);
+    setTimeout(() => setPops((ps) => ps.filter((x) => x.id !== id)), 1100);
+  };
 
   useEffect(() => {
     if (deck) prefetchWiki(deck.slice(index, index + 3).filter((cid) => !hasApprovedImage(cid)).map((cid) => cardById(cid)!.card.wiki));
@@ -93,8 +101,14 @@ export default function Play() {
   const record = (g: Grade) => {
     grade(card.id, g);
     const t = tally.current;
-    if (g === 'knew') { t.knew++; t.xp += XP.knew + (mode === 'type' ? XP.typedBonus : 0); }
-    if (g === 'forgot') { t.forgot++; t.xp += XP.forgot; }
+    if (g === 'knew') {
+      const gained = XP.knew + (mode === 'type' ? XP.typedBonus : 0);
+      t.knew++; t.xp += gained;
+      const c = combo + 1;
+      setCombo(c);
+      pop(c >= 3 ? `🔥 ${c} in a row! +${gained} XP` : `+${gained} XP`, c >= 3 ? colors.goldDark : colors.knewDark);
+    }
+    if (g === 'forgot') { t.forgot++; t.xp += XP.forgot; setCombo(0); pop(`+${XP.forgot} XP`, colors.primary); }
     if (g === 'ignore') t.skipped++;
   };
 
@@ -118,8 +132,12 @@ export default function Play() {
     <SafeAreaView style={styles.screen} edges={['bottom']}>
       <Stack.Screen options={{ title }} />
       <View style={styles.progressRow}>
-        <View style={{ flex: 1 }}><ProgressBar value={index / deck.length} /></View>
-        <Text style={styles.counter}>{index + 1}/{deck.length}</Text>
+        <View style={{ flex: 1 }}><ProgressBar value={index / deck.length} height={16} /></View>
+        {combo >= 2 ? (
+          <Text style={[styles.counter, { color: colors.goldDark }]}>🔥 {combo}</Text>
+        ) : (
+          <Text style={styles.counter}>{index + 1}/{deck.length}</Text>
+        )}
       </View>
 
       {phase === 'learn' ? (
@@ -127,6 +145,8 @@ export default function Play() {
       ) : (
         <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
           <View style={styles.cardArea}>
+            {deck.length - index > 2 && <View style={[styles.stackCard, { transform: [{ translateY: 22 }, { scale: 0.9 }] }]} />}
+            {deck.length - index > 1 && <View style={[styles.stackCard, { transform: [{ translateY: 11 }, { scale: 0.95 }] }]} />}
             <SwipeCard
               key={card.id}
               swipeRef={swipeRef}
@@ -137,6 +157,7 @@ export default function Play() {
               front={<CardFront card={card} topic={cardTopic} showDaily={isDaily} />}
               back={<CardBack card={card} topic={cardTopic} typedCorrect={typedCorrect} typed={typed} />}
             />
+            {pops.map((p) => <XpPop key={p.id} text={p.text} color={p.color} />)}
           </View>
 
           {mode === 'type' ? (
@@ -238,7 +259,7 @@ function LearnPanel({ card, onDone }: { card: Card; onDone: () => void }) {
   return (
     <View style={{ flex: 1, padding: 16 }}>
       <ScrollView style={styles.learn} contentContainerStyle={{ padding: 20 }}>
-        <View style={[styles.imageBox, { height: 220, borderRadius: radius.md }]}>
+        <View style={[styles.imageBox, { flex: 0, height: 220, borderRadius: radius.md }]}>
           {pic.source ? <Image source={pic.source} style={StyleSheet.absoluteFill} contentFit="contain" /> : null}
         </View>
         {pic.credit ? <Text style={styles.credit}>Photo: {pic.credit}</Text> : null}
@@ -250,7 +271,7 @@ function LearnPanel({ card, onDone }: { card: Card; onDone: () => void }) {
           <Text style={styles.link}>Read more on Wikipedia ›</Text>
         </Pressable>
       </ScrollView>
-      <Button title="Got it" onPress={onDone} style={{ marginTop: 12 }} />
+      <Button title="Got it" variant="success" onPress={onDone} style={{ marginTop: 12 }} />
     </View>
   );
 }
@@ -264,11 +285,39 @@ function Picture({ pic, emoji }: { pic: CardPicture; emoji: string }) {
 function RoundAction({ label, icon, color, bg, onPress }: { label: string; icon: string; color: string; bg: string; onPress: () => void }) {
   return (
     <Pressable onPress={onPress} style={{ alignItems: 'center', flex: 1 }} accessibilityRole="button" accessibilityLabel={label}>
-      <View style={[styles.round, { backgroundColor: bg }]}>
-        <Text style={{ fontSize: 26, fontWeight: '900', color }}>{icon}</Text>
-      </View>
-      <Text style={[styles.roundLabel, { color }]}>{label}</Text>
+      {({ pressed }) => (
+        <>
+          <View style={[styles.roundLip, { backgroundColor: darker(color, 0.22), paddingBottom: pressed ? 0 : 6, marginTop: pressed ? 6 : 0 }]}>
+            <View style={[styles.round, { backgroundColor: color }]}>
+              <Text style={{ fontSize: 28, fontFamily: F.black, color: '#fff' }}>{icon}</Text>
+            </View>
+          </View>
+          <Text style={[styles.roundLabel, { color: darker(color, 0.2) }]}>{label}</Text>
+        </>
+      )}
     </Pressable>
+  );
+}
+
+/** "+10 XP" that floats up and fades out over the card. */
+function XpPop({ text, color }: { text: string; color: string }) {
+  const v = useRef(new Animated.Value(0)).current;
+  useEffect(() => {
+    Animated.timing(v, { toValue: 1, duration: 1000, easing: Easing.out(Easing.cubic), useNativeDriver: true }).start();
+  }, [v]);
+  return (
+    <Animated.View
+      pointerEvents="none"
+      style={[styles.pop, {
+        opacity: v.interpolate({ inputRange: [0, 0.15, 0.75, 1], outputRange: [0, 1, 1, 0] }),
+        transform: [
+          { translateY: v.interpolate({ inputRange: [0, 1], outputRange: [20, -70] }) },
+          { scale: v.interpolate({ inputRange: [0, 0.2, 1], outputRange: [0.6, 1.15, 1] }) },
+        ],
+      }]}
+    >
+      <Text style={[styles.popText, { color }]}>{text}</Text>
+    </Animated.View>
   );
 }
 
@@ -282,31 +331,35 @@ const styles = StyleSheet.create({
   screen: { flex: 1, backgroundColor: colors.bg },
   center: { flex: 1, alignItems: 'center', justifyContent: 'center', padding: 24, backgroundColor: colors.bg },
   progressRow: { flexDirection: 'row', alignItems: 'center', gap: 12, paddingHorizontal: 20, paddingTop: 12 },
-  counter: { fontWeight: '700', color: colors.muted, minWidth: 44, textAlign: 'right' },
+  stackCard: { position: 'absolute', top: 20, left: 20, right: 20, bottom: 20, backgroundColor: colors.card, borderRadius: radius.lg, borderWidth: 2, borderColor: colors.line },
+  pop: { position: 'absolute', alignSelf: 'center', top: '38%', backgroundColor: colors.card, borderRadius: 999, paddingHorizontal: 16, paddingVertical: 8, borderWidth: 2, borderColor: colors.line },
+  popText: { fontFamily: F.black, fontSize: 18 },
+  roundLip: { borderRadius: 40 },
+  counter: { fontFamily: F.black, color: colors.muted, minWidth: 48, textAlign: 'right', fontSize: 15 },
   cardArea: { flex: 1, padding: 20 },
-  imageBox: { flex: 3, backgroundColor: '#F1F0F7', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' },
+  imageBox: { flex: 3, backgroundColor: '#F4F1EC', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' },
   cardFooter: { padding: 20, gap: 6 },
-  topicTag: { fontSize: 13, fontWeight: '700', color: colors.primary },
-  prompt: { fontSize: 22, fontWeight: '800', color: colors.ink },
-  tapHint: { fontSize: 13, color: colors.muted, marginTop: 4 },
-  answer: { fontSize: 28, fontWeight: '900', color: colors.ink, textAlign: 'center' },
-  verdict: { fontSize: 16, fontWeight: '800', textAlign: 'center' },
-  swipeLegend: { fontSize: 13, color: colors.muted, textAlign: 'center', marginTop: 12 },
+  topicTag: { fontSize: 12, fontFamily: F.black, color: colors.primary, textTransform: 'uppercase', letterSpacing: 1 },
+  prompt: { fontSize: 24, fontFamily: F.display, color: colors.ink },
+  tapHint: { fontSize: 13, color: colors.muted, marginTop: 4, fontFamily: F.bold },
+  answer: { fontSize: 32, fontFamily: F.display, color: colors.ink, textAlign: 'center', letterSpacing: -0.5 },
+  verdict: { fontSize: 16, fontFamily: F.extra, textAlign: 'center' },
+  swipeLegend: { fontSize: 13, color: colors.muted, textAlign: 'center', marginTop: 12, fontFamily: F.bold },
   actions: { paddingHorizontal: 20, paddingBottom: 12, gap: 10 },
   row: { flexDirection: 'row', gap: 10, alignItems: 'center' },
-  round: { width: 64, height: 64, borderRadius: 32, alignItems: 'center', justifyContent: 'center' },
-  roundLabel: { fontSize: 12, fontWeight: '700', marginTop: 4 },
+  round: { width: 68, height: 68, borderRadius: 34, alignItems: 'center', justifyContent: 'center' },
+  roundLabel: { fontSize: 12, fontFamily: F.black, marginTop: 6 },
   input: {
     backgroundColor: colors.card, borderRadius: radius.md, paddingHorizontal: 16, paddingVertical: 14,
-    fontSize: 18, color: colors.ink, borderWidth: 1.5, borderColor: colors.line,
+    fontSize: 18, color: colors.ink, borderWidth: 2, borderBottomWidth: 4, borderColor: colors.lineDark, fontFamily: F.bold,
   },
-  learn: { flex: 1, backgroundColor: colors.card, borderRadius: radius.lg },
-  learnLabel: { color: colors.forgot, fontWeight: '800', marginTop: 16, textAlign: 'center', textTransform: 'uppercase', fontSize: 12, letterSpacing: 1 },
-  blurb: { fontSize: 17, color: colors.ink, lineHeight: 24, marginTop: 10 },
-  link: { color: colors.primary, fontWeight: '700', marginTop: 16, fontSize: 16 },
-  title: { fontSize: 26, fontWeight: '800', color: colors.ink, marginTop: 8 },
-  muted: { fontSize: 15, color: colors.muted, textAlign: 'center', lineHeight: 21 },
+  learn: { flex: 1, backgroundColor: colors.card, borderRadius: radius.lg, borderWidth: 2, borderColor: colors.line },
+  learnLabel: { color: colors.forgotDark, fontFamily: F.black, marginTop: 16, textAlign: 'center', textTransform: 'uppercase', fontSize: 12, letterSpacing: 1 },
+  blurb: { fontSize: 18, color: colors.ink, lineHeight: 26, marginTop: 10, fontFamily: F.body },
+  link: { color: colors.primary, fontFamily: F.bold, marginTop: 16, fontSize: 16 },
+  title: { fontSize: 28, fontFamily: F.display, color: colors.ink, marginTop: 8 },
+  muted: { fontSize: 15, color: colors.muted, textAlign: 'center', lineHeight: 21, fontFamily: F.body },
   bigEmoji: { fontSize: 72 },
-  unreviewed: { position: 'absolute', top: 10, left: 10, backgroundColor: colors.goldSoft, color: '#92400E', fontSize: 11, fontWeight: '800', paddingHorizontal: 8, paddingVertical: 3, borderRadius: 999, overflow: 'hidden' },
+  unreviewed: { position: 'absolute', top: 10, left: 10, backgroundColor: colors.goldSoft, color: '#92400E', fontSize: 11, fontFamily: F.extra, paddingHorizontal: 8, paddingVertical: 3, borderRadius: 999, overflow: 'hidden' },
   credit: { fontSize: 11, color: colors.muted, textAlign: 'center', marginTop: 6 },
 });

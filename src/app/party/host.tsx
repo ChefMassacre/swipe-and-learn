@@ -8,7 +8,7 @@ import { RAW_TOPICS } from '../../data/topicsData';
 import { CARD_IMAGES } from '../../data/cardImages';
 import { hostSyncAvailable, normalizeCode, PartyState, Side, useHostRoom } from '../../lib/partySync';
 import { useWiki } from '../../lib/wiki';
-import { colors, radius } from '../../lib/theme';
+import { F, colors, radius } from '../../lib/theme';
 
 const SIDE_COLOR: Record<Side, string> = { a: colors.primary, b: colors.gold };
 const allCards = new Map(RAW_TOPICS.flatMap((t) => t.cards.map((c) => [c.id, c] as const)));
@@ -138,24 +138,24 @@ const styles = StyleSheet.create({
   screen: { flex: 1, backgroundColor: '#16142B', padding: 16 },
   center: { flex: 1, backgroundColor: '#16142B', alignItems: 'center', justifyContent: 'center', padding: 28, gap: 16 },
   top: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
-  roomTag: { color: '#ffffffa0', fontWeight: '800', letterSpacing: 1 },
-  title: { color: '#fff', fontSize: 28, fontWeight: '900', textAlign: 'center' },
+  roomTag: { color: '#ffffffa0', fontFamily: F.extra, letterSpacing: 1 },
+  title: { color: '#fff', fontSize: 28, fontFamily: F.black, textAlign: 'center' },
   sub: { color: '#ffffffb0', fontSize: 16, textAlign: 'center', lineHeight: 22 },
-  link: { color: '#ffffffc0', fontWeight: '700', fontSize: 16 },
-  codeInput: { color: '#fff', fontSize: 48, fontWeight: '900', letterSpacing: 12, textAlign: 'center', borderBottomWidth: 3, borderColor: '#ffffff40', minWidth: 220, paddingVertical: 8 },
+  link: { color: '#ffffffc0', fontFamily: F.bold, fontSize: 16 },
+  codeInput: { color: '#fff', fontSize: 48, fontFamily: F.black, letterSpacing: 12, textAlign: 'center', borderBottomWidth: 3, borderColor: '#ffffff40', minWidth: 220, paddingVertical: 8 },
   bigBtn: { backgroundColor: '#fff', borderRadius: 999, paddingHorizontal: 40, paddingVertical: 16 },
-  bigBtnText: { color: '#16142B', fontSize: 20, fontWeight: '900' },
+  bigBtnText: { color: '#16142B', fontSize: 20, fontFamily: F.black },
   clocks: { flexDirection: 'row', gap: 10, marginTop: 12 },
   clockBox: { flex: 1, borderWidth: 2, borderRadius: radius.md, padding: 10 },
-  clockName: { color: '#fff', fontWeight: '800' },
-  clockTime: { color: '#fff', fontSize: 28, fontWeight: '900' },
+  clockName: { color: '#fff', fontFamily: F.extra },
+  clockTime: { color: '#fff', fontSize: 28, fontFamily: F.black },
   body: { flex: 1, alignItems: 'center', justifyContent: 'center', gap: 10 },
-  turn: { fontSize: 18, fontWeight: '900' },
+  turn: { fontSize: 18, fontFamily: F.black },
   thumb: { width: 160, height: 120, borderRadius: radius.md, backgroundColor: '#fff', overflow: 'hidden' },
-  answerLabel: { color: '#ffffff90', fontWeight: '800', textTransform: 'uppercase', letterSpacing: 1, marginTop: 8 },
-  answer: { color: '#fff', fontSize: 38, fontWeight: '900', textAlign: 'center' },
+  answerLabel: { color: '#ffffff90', fontFamily: F.extra, textTransform: 'uppercase', letterSpacing: 1, marginTop: 8 },
+  answer: { color: '#fff', fontSize: 38, fontFamily: F.black, textAlign: 'center' },
   buttons: { flexDirection: 'row', gap: 12 },
   judgeBtn: { flex: 1, borderRadius: radius.lg, paddingVertical: 28, alignItems: 'center' },
-  judgeText: { color: '#fff', fontSize: 22, fontWeight: '900' },
+  judgeText: { color: '#fff', fontSize: 22, fontFamily: F.black },
   off: { opacity: 0.35 },
 });

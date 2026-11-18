@@ -11,7 +11,7 @@ import { canPlay } from '../../lib/selectors';
 import { prefetchWiki } from '../../lib/wiki';
 import { useCardPicture } from '../../lib/cardImage';
 import { hasApprovedImage, Card } from '../../data/topics';
-import { colors, radius } from '../../lib/theme';
+import { F, colors, radius } from '../../lib/theme';
 import { hostSyncAvailable, JudgeMessage, newRoomCode, PartyState, useGameRoom } from '../../lib/partySync';
 
 type Side = 'a' | 'b';
@@ -214,7 +214,7 @@ export default function PartyPlay() {
                 On the host's phone: open Swipe&Learn › Compete › Be the host, and enter this code. The host sees the answers
                 and decides what's right, so nobody can cheat.
               </Text>
-              <Text style={[styles.overlaySub, { color: room.hostConnected ? colors.knew : '#ffffff90', fontWeight: '800' }]}>
+              <Text style={[styles.overlaySub, { color: room.hostConnected ? colors.knew : '#ffffff90', fontFamily: F.extra }]}>
                 {room.hostConnected ? '✓ Host connected' : room.linked ? 'Waiting for the host…' : 'Connecting…'}
               </Text>
               {room.hostConnected && <BigButton title="Continue" onPress={() => setStatus('ready')} />}
@@ -331,31 +331,31 @@ const styles = StyleSheet.create({
   center: { flex: 1, backgroundColor: '#16142B', alignItems: 'center', justifyContent: 'center', gap: 16 },
   zone: { flex: 1, margin: 10, borderRadius: radius.lg, padding: 18, justifyContent: 'space-between' },
   zoneRow: { flexDirection: 'row', alignItems: 'center', gap: 10 },
-  zoneName: { color: '#fff', fontSize: 22, fontWeight: '900' },
-  zoneScore: { color: '#ffffffb0', fontWeight: '700' },
-  clock: { color: '#fff', fontSize: 52, fontWeight: '900', fontVariant: ['tabular-nums'] },
-  zoneHint: { color: '#ffffffc0', fontWeight: '700', flex: 1 },
+  zoneName: { color: '#fff', fontSize: 22, fontFamily: F.black },
+  zoneScore: { color: '#ffffffb0', fontFamily: F.bold },
+  clock: { color: '#fff', fontSize: 52, fontFamily: F.black, fontVariant: ['tabular-nums'] },
+  zoneHint: { color: '#ffffffc0', fontFamily: F.bold, flex: 1 },
   passBtn: { backgroundColor: '#00000033', borderRadius: 999, paddingHorizontal: 20, paddingVertical: 10 },
-  passText: { color: '#fff', fontWeight: '900', fontSize: 16 },
+  passText: { color: '#fff', fontFamily: F.black, fontSize: 16 },
   middle: { flex: 1.6, marginHorizontal: 10 },
   card: { flex: 1, backgroundColor: '#fff', borderRadius: radius.lg, overflow: 'hidden', alignItems: 'center', justifyContent: 'center' },
   answerBar: { position: 'absolute', left: 0, right: 0, bottom: 0, backgroundColor: '#16142BE6', padding: 14 },
-  answerText: { color: '#fff', fontSize: 20, fontWeight: '900', textAlign: 'center' },
+  answerText: { color: '#fff', fontSize: 20, fontFamily: F.black, textAlign: 'center' },
   flash: { position: 'absolute', bottom: 12, alignSelf: 'center', borderRadius: 999, paddingLeft: 16, paddingRight: 6, paddingVertical: 6, flexDirection: 'row', alignItems: 'center', gap: 10, minHeight: 40 },
   undoBtn: { backgroundColor: '#ffffff', borderRadius: 999, paddingHorizontal: 12, paddingVertical: 5 },
-  undoText: { color: colors.ink, fontWeight: '900' },
-  roomCode: { color: '#fff', fontSize: 64, fontWeight: '900', letterSpacing: 10 },
+  undoText: { color: colors.ink, fontFamily: F.black },
+  roomCode: { color: '#fff', fontSize: 64, fontFamily: F.black, letterSpacing: 10 },
   banner: { position: 'absolute', top: 12, left: 12, right: 60, backgroundColor: colors.forgot, borderRadius: 999, paddingVertical: 6, paddingHorizontal: 12 },
-  bannerText: { color: '#fff', fontWeight: '800', fontSize: 13, textAlign: 'center' },
-  flashText: { color: '#fff', fontWeight: '900', fontSize: 16 },
+  bannerText: { color: '#fff', fontFamily: F.extra, fontSize: 13, textAlign: 'center' },
+  flashText: { color: '#fff', fontFamily: F.black, fontSize: 16 },
   controls: { position: 'absolute', top: 10, right: 12, flexDirection: 'row', gap: 16 },
-  ctrl: { fontSize: 18, fontWeight: '900', color: '#16142B', backgroundColor: '#ffffffd0', borderRadius: 14, paddingHorizontal: 8, overflow: 'hidden' },
+  ctrl: { fontSize: 18, fontFamily: F.black, color: '#16142B', backgroundColor: '#ffffffd0', borderRadius: 14, paddingHorizontal: 8, overflow: 'hidden' },
   overlay: { position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: '#16142BF7', alignItems: 'center', justifyContent: 'center', padding: 28, gap: 14 },
-  overlayKicker: { fontWeight: '900', color: '#ffffffa0', textTransform: 'uppercase', letterSpacing: 1 },
-  overlayTitle: { color: '#fff', fontSize: 32, fontWeight: '900', textAlign: 'center' },
+  overlayKicker: { fontFamily: F.black, color: '#ffffffa0', textTransform: 'uppercase', letterSpacing: 1 },
+  overlayTitle: { color: '#fff', fontSize: 32, fontFamily: F.black, textAlign: 'center' },
   overlaySub: { color: '#ffffffc0', fontSize: 16, textAlign: 'center' },
-  scoreLine: { color: '#fff', fontSize: 22, fontWeight: '900' },
+  scoreLine: { color: '#fff', fontSize: 22, fontFamily: F.black },
   bigBtn: { backgroundColor: '#fff', borderRadius: 999, paddingHorizontal: 40, paddingVertical: 16, marginTop: 10 },
-  bigBtnText: { color: '#16142B', fontSize: 20, fontWeight: '900' },
-  link: { color: '#ffffffc0', fontWeight: '700', fontSize: 16, marginTop: 8 },
+  bigBtnText: { color: '#16142B', fontSize: 20, fontFamily: F.black },
+  link: { color: '#ffffffc0', fontFamily: F.bold, fontSize: 16, marginTop: 8 },
 });
