@@ -4,7 +4,13 @@
 //   npm run images:fetch -- --force      (download again)
 import { loadCards, filterCards, hasFlag, readManifest, writeManifest, findFile, fetchOriginal, runPool } from './lib.mjs';
 
-const cards = filterCards(await loadCards());
+let cards;
+try {
+  cards = filterCards(await loadCards());
+} catch (e) {
+  console.error('Could not read the card list (src/data/topicsData.ts). Run this from the app folder, the one with package.json.\n', e.message);
+  process.exit(1);
+}
 const manifest = readManifest();
 const force = hasFlag('--force');
 const todo = cards.filter((c) => force || !findFile('original', c.id));
@@ -20,8 +26,9 @@ await runPool(todo, 4, async (card) => {
     ok++;
     console.log(`  ✓ ${card.id}  (${info.license})`);
   } catch (e) {
-    failed.push(`${card.id}: ${e.message}`);
-    console.log(`  ✗ ${card.id}  ${e.message}`);
+    const why = e.cause?.code ? `${e.message} (${e.cause.code})` : e.message;
+    failed.push(`${card.id}: ${why}`);
+    console.log(`  ✗ ${card.id}  ${why}`);
   }
 });
 writeManifest(manifest);

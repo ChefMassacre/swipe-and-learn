@@ -32,9 +32,9 @@
     "web": "expo start --web",
     "typecheck": "tsc --noEmit",
     "test": "node --experimental-strip-types --test src/lib/*.test.ts",
-    "images:fetch": "node --experimental-strip-types --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --disable-warning=ExperimentalWarning scripts/images/fetch.mjs",
-    "images:clean": "node --experimental-strip-types --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --disable-warning=ExperimentalWarning scripts/images/clean.mjs",
-    "images:review": "node --experimental-strip-types --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --disable-warning=ExperimentalWarning scripts/images/review.mjs"
+    "images:fetch": "node scripts/images/run.cjs fetch",
+    "images:clean": "node scripts/images/run.cjs clean",
+    "images:review": "node scripts/images/run.cjs review"
   },
   "private": true
 }
