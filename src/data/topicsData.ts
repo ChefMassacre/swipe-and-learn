@@ -29,6 +29,8 @@ export type Topic = {
   description: string;
   /** Free users can play free topics; the rest need Plus. */
   free: boolean;
+  /** Ids of similar topics in other categories; drawn as links on the Explore map. */
+  related?: string[];
   cards: Card[];
 };
 
@@ -50,6 +52,7 @@ const c = (id: string, answer: string, wiki: string, blurb: string, extra: Parti
 const TOPICS: Topic[] = [
   {
     id: 'consoles',
+    related: ['movies', 'brands'],
     title: 'Game Consoles',
     emoji: '🎮',
     categoryId: 'tech',
@@ -72,6 +75,7 @@ const TOPICS: Topic[] = [
   },
   {
     id: 'philosophers',
+    related: ['celebs'],
     title: 'Philosophers',
     emoji: '🏛️',
     categoryId: 'ideas',
@@ -93,6 +97,7 @@ const TOPICS: Topic[] = [
   },
   {
     id: 'construction',
+    related: ['tools', 'materials'],
     title: 'Construction Equipment',
     emoji: '🚜',
     categoryId: 'trades',
@@ -114,6 +119,7 @@ const TOPICS: Topic[] = [
   },
   {
     id: 'fabrics',
+    related: ['brands', 'materials'],
     title: 'Clothing Materials',
     emoji: '🧵',
     categoryId: 'style',
@@ -135,6 +141,7 @@ const TOPICS: Topic[] = [
   },
   {
     id: 'tools',
+    related: ['materials'],
     title: 'Hand Tools',
     emoji: '🔧',
     categoryId: 'trades',
@@ -155,10 +162,10 @@ const TOPICS: Topic[] = [
     ],
   },
   // Coming soon: shown on the map so users can see where the app is going.
-  { id: 'celebs', title: 'Modern Celebrities', emoji: '⭐', categoryId: 'pop', prompt: 'Who is this?', description: 'Coming soon.', free: false, cards: [] },
+  { id: 'celebs', related: ['movies', 'sports'], title: 'Modern Celebrities', emoji: '⭐', categoryId: 'pop', prompt: 'Who is this?', description: 'Coming soon.', free: false, cards: [] },
   { id: 'movies', title: 'Movies', emoji: '🎬', categoryId: 'pop', prompt: 'Which movie is this?', description: 'Coming soon.', free: false, cards: [] },
   { id: 'brands', title: 'Brands & Logos', emoji: '🏷️', categoryId: 'pop', prompt: 'Which brand is this?', description: 'Coming soon.', free: false, cards: [] },
-  { id: 'sports', title: 'Sports', emoji: '🏀', categoryId: 'sports', prompt: 'Which sport is this?', description: 'Coming soon.', free: false, cards: [] },
+  { id: 'sports', related: ['brands'], title: 'Sports', emoji: '🏀', categoryId: 'sports', prompt: 'Which sport is this?', description: 'Coming soon.', free: false, cards: [] },
   { id: 'materials', title: 'Building Materials', emoji: '🧱', categoryId: 'trades', prompt: 'What material is this?', description: 'Coming soon.', free: false, cards: [] },
 ];
 
