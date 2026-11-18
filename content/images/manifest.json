@@ -1,1 +1,447 @@
-{}
+{
+  "con-backhoe": {
+    "wikiFile": "Backhoe_loader_Cat420E_left.jpg",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Backhoe_loader_Cat420E_left.jpg",
+    "credit": "Shaun Greiner from Creve Coeur, United States of America",
+    "license": "CC BY-SA 2.0",
+    "nonFree": false,
+    "status": "approved",
+    "choice": "original"
+  },
+  "con-bulldozer": {
+    "wikiFile": "CatD9T.jpg",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:CatD9T.jpg",
+    "credit": "Shaun Greiner",
+    "license": "CC BY-SA 2.0",
+    "nonFree": false,
+    "status": "approved",
+    "choice": "original"
+  },
+  "con-dumptruck": {
+    "wikiFile": "Freightliner_M2_106_6x4_2014_(14240376744).jpg",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Freightliner_M2_106_6x4_2014_(14240376744).jpg",
+    "credit": "order_242 from Chile",
+    "license": "CC BY-SA 2.0",
+    "nonFree": false,
+    "status": "approved",
+    "choice": "original"
+  },
+  "con-excavator": {
+    "wikiFile": "Excavator_Postiguet_Beach_2.jpg",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Excavator_Postiguet_Beach_2.jpg",
+    "credit": "kallerna",
+    "license": "CC BY-SA 4.0",
+    "nonFree": false,
+    "status": "approved",
+    "choice": "original"
+  },
+  "con-grader": {
+    "wikiFile": "Grader_2.jpg",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Grader_2.jpg",
+    "credit": "Wikideas1",
+    "license": "CC0",
+    "nonFree": false,
+    "status": "approved",
+    "choice": "original"
+  },
+  "con-mixer": {
+    "wikiFile": "GH-SA.jpg",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:GH-SA.jpg",
+    "credit": "GH SA",
+    "license": "CC BY-SA 4.0",
+    "nonFree": false,
+    "status": "approved",
+    "choice": "original"
+  },
+  "con-roller": {
+    "wikiFile": "John_Deere_roller,_U.S._Navy,_Camp_Covington,_NMCB-133,_080928-N-1106H-001.jpg",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:John_Deere_roller,_U.S._Navy,_Camp_Covington,_NMCB-133,_080928-N-1106H-001.jpg",
+    "credit": "Builder 2nd Class Stuart Helvie, U.S. Navy (U.S. Navy photo)",
+    "license": "Public domain",
+    "nonFree": false,
+    "status": "approved",
+    "choice": "original"
+  },
+  "con-skidsteer": {
+    "wikiFile": "Bobcat_S650_skid_steer_loader_(15084521732).jpg",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Bobcat_S650_skid_steer_loader_(15084521732).jpg",
+    "credit": "Bob Adams from George, South Africa",
+    "license": "CC BY-SA 2.0",
+    "nonFree": false,
+    "status": "approved",
+    "choice": "original"
+  },
+  "con-telehandler": {
+    "wikiFile": "FEMA_-_10363_-_Photograph_by_Mark_Wolfe_taken_on_08-29-2004_in_Florida.jpg",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:FEMA_-_10363_-_Photograph_by_Mark_Wolfe_taken_on_08-29-2004_in_Florida.jpg",
+    "credit": "Mark Wolfe",
+    "license": "Public domain",
+    "nonFree": false,
+    "status": "approved",
+    "choice": "original"
+  },
+  "con-towercrane": {
+    "wikiFile": "Crane_machine_slewing_platform.svg",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Crane_machine_slewing_platform.svg",
+    "credit": "Wilfredo R. Rodriguez H. edited by Gregory David Harington",
+    "license": "CC BY-SA 3.0",
+    "nonFree": false,
+    "status": "rejected",
+    "note": "Just get a realistic image of a tower crane, not a drawing",
+    "choice": null
+  },
+  "consoles-gameboy": {
+    "wikiFile": "Game-Boy-FL.png",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Game-Boy-FL.png",
+    "credit": "Transfrom JPEG version and remove white background. Original by Evan-Amos.",
+    "license": "Public domain",
+    "nonFree": false,
+    "status": "approved",
+    "choice": "cleaned"
+  },
+  "consoles-gamecube": {
+    "wikiFile": "GameCube-Console-Set.png",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:GameCube-Console-Set.png",
+    "credit": "Evan-Amos",
+    "license": "Public domain",
+    "nonFree": false,
+    "status": "approved",
+    "choice": "cleaned"
+  },
+  "consoles-genesis": {
+    "wikiFile": "Sega-Mega-Drive-JP-Mk1-Console-Set.jpg",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Sega-Mega-Drive-JP-Mk1-Console-Set.jpg",
+    "credit": "Evan-Amos",
+    "license": "Public domain",
+    "nonFree": false,
+    "status": "approved",
+    "choice": "cleaned"
+  },
+  "consoles-n64": {
+    "wikiFile": "Nintendo-64-wController-L.jpg",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Nintendo-64-wController-L.jpg",
+    "credit": "Evan-Amos",
+    "license": "Public domain",
+    "nonFree": false,
+    "status": "approved",
+    "choice": "cleaned"
+  },
+  "consoles-nes": {
+    "wikiFile": "NES-Console-Set.png",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:NES-Console-Set.png",
+    "credit": "Evan-Amos",
+    "license": "Public domain",
+    "nonFree": false,
+    "status": "approved",
+    "choice": "cleaned"
+  },
+  "consoles-ps1": {
+    "wikiFile": "Playstation_logo_colour.svg",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Playstation_logo_colour.svg",
+    "credit": "Sony - Manabu Sakamoto",
+    "license": "Public domain",
+    "nonFree": false,
+    "status": "approved",
+    "choice": "original"
+  },
+  "consoles-ps2": {
+    "wikiFile": "Sony_PlayStation_2.png",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Sony_PlayStation_2.png",
+    "credit": "Perchybits",
+    "license": "CC0",
+    "nonFree": false,
+    "status": "approved",
+    "choice": "cleaned"
+  },
+  "consoles-snes": {
+    "wikiFile": "SNES-Mod1-Console-Set.png",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:SNES-Mod1-Console-Set.png",
+    "credit": "Evan-Amos",
+    "license": "CC BY-SA 3.0",
+    "nonFree": false,
+    "status": "approved",
+    "choice": "cleaned"
+  },
+  "consoles-switch": {
+    "wikiFile": "Nintendo_Switch_logo.svg",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Nintendo_Switch_logo.svg",
+    "credit": "Nintendo",
+    "license": "Public domain",
+    "nonFree": false,
+    "status": "approved",
+    "choice": "cleaned"
+  },
+  "consoles-wii": {
+    "wikiFile": "Wii-Console.png",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Wii-Console.png",
+    "credit": "Evan-Amos",
+    "license": "Public domain",
+    "nonFree": false,
+    "status": "approved",
+    "choice": "cleaned"
+  },
+  "consoles-xbox": {
+    "wikiFile": "Xbox-Console-wDuke-L.png",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Xbox-Console-wDuke-L.png",
+    "credit": "Remove white background. Original by Evan-Amos.",
+    "license": "Public domain",
+    "nonFree": false,
+    "status": "approved",
+    "choice": "cleaned"
+  },
+  "fab-cashmere": {
+    "wikiFile": "Kaschmirschal_1.jpg",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Kaschmirschal_1.jpg",
+    "credit": "Ryj",
+    "license": "Public domain",
+    "nonFree": false,
+    "status": "approved",
+    "choice": "original"
+  },
+  "fab-corduroy": {
+    "wikiFile": "Mansestr.jpg",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Mansestr.jpg",
+    "credit": "Ludek",
+    "license": "CC BY-SA 3.0",
+    "nonFree": false,
+    "status": "approved",
+    "choice": "original"
+  },
+  "fab-denim": {
+    "wikiFile": "Denim_texture_03.jpg",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Denim_texture_03.jpg",
+    "credit": "Nikodem Nijaki",
+    "license": "CC BY-SA 3.0",
+    "nonFree": false,
+    "status": "approved",
+    "choice": "original"
+  },
+  "fab-leather": {
+    "wikiFile": "Leathertools.jpg",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Leathertools.jpg",
+    "credit": "Scott Bauer",
+    "license": "Public domain",
+    "nonFree": false,
+    "status": "approved",
+    "choice": "original"
+  },
+  "fab-linen": {
+    "wikiFile": "Handkerchief.jpg",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Handkerchief.jpg",
+    "credit": "No machine-readable author provided. PKM assumed (based on copyright claims).",
+    "license": "Public domain",
+    "nonFree": false,
+    "status": "approved",
+    "choice": "original"
+  },
+  "fab-polyester": {
+    "wikiFile": "Definition_polyester_ester_group.svg",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Definition_polyester_ester_group.svg",
+    "credit": "Minihaa",
+    "license": "CC0",
+    "nonFree": false,
+    "status": "approved",
+    "choice": "original"
+  },
+  "fab-silk": {
+    "wikiFile": "Silk_raw_01a.jpg",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Silk_raw_01a.jpg",
+    "credit": "Kuebi = Armin Kübelbeck",
+    "license": "CC BY-SA 3.0",
+    "nonFree": false,
+    "status": "approved",
+    "choice": "original"
+  },
+  "fab-tweed": {
+    "wikiFile": "Harris_tweed.jpg",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Harris_tweed.jpg",
+    "credit": "PKM",
+    "license": "Public domain",
+    "nonFree": false,
+    "status": "approved",
+    "choice": "original"
+  },
+  "fab-velvet": {
+    "wikiFile": "Blue_velvet_(cropped).jpg",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Blue_velvet_(cropped).jpg",
+    "credit": "Isokivi",
+    "license": "CC BY-SA 3.0",
+    "nonFree": false,
+    "status": "approved",
+    "choice": "original"
+  },
+  "fab-wool": {
+    "wikiFile": "Royal_Winter_Fair_Wool_2.jpg",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Royal_Winter_Fair_Wool_2.jpg",
+    "credit": "Rob",
+    "license": "CC BY 2.0",
+    "nonFree": false,
+    "status": "approved",
+    "choice": "original"
+  },
+  "phil-aristotle": {
+    "wikiFile": "Aristotle_Altemps_Inv8575.jpg",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Aristotle_Altemps_Inv8575.jpg",
+    "credit": "After Lysippos",
+    "license": "Public domain",
+    "nonFree": false,
+    "status": "approved",
+    "choice": "original"
+  },
+  "phil-beauvoir": {
+    "wikiFile": "Simone_De_Beauvoir_(cropped).jpg",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Simone_De_Beauvoir_(cropped).jpg",
+    "credit": "Moshe Milner",
+    "license": "CC BY-SA 3.0",
+    "nonFree": false,
+    "status": "approved",
+    "choice": "original"
+  },
+  "phil-confucius": {
+    "wikiFile": "Confucius,_fresco_from_a_Western_Han_tomb_of_Dongping_County,_Shandong_province,_China_(cropped).jpg",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Confucius,_fresco_from_a_Western_Han_tomb_of_Dongping_County,_Shandong_province,_China_(cropped).jpg",
+    "credit": "Anonymous Chinese painter of the Western Han period",
+    "license": "Public domain",
+    "nonFree": false,
+    "status": "approved",
+    "choice": "original"
+  },
+  "phil-descartes": {
+    "wikiFile": "Frans_Hals_-_Portret_van_René_Descartes.jpg",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Frans_Hals_-_Portret_van_Ren%C3%A9_Descartes.jpg",
+    "credit": "After Frans Hals",
+    "license": "Public domain",
+    "nonFree": false,
+    "status": "approved",
+    "choice": "original"
+  },
+  "phil-kant": {
+    "wikiFile": "Immanuel_Kant_-_Gemaelde_1.jpg",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Immanuel_Kant_-_Gemaelde_1.jpg",
+    "credit": "Johann Gottlieb Becker (1720-1782)",
+    "license": "Public domain",
+    "nonFree": false,
+    "status": "approved",
+    "choice": "original"
+  },
+  "phil-marx": {
+    "wikiFile": "Karl_Marx_by_John_Jabez_Edwin_Mayall_1875_-_Restored.png",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Karl_Marx_by_John_Jabez_Edwin_Mayall_1875_-_Restored.png",
+    "credit": "John Jabez Edwin Mayall",
+    "license": "Public domain",
+    "nonFree": false,
+    "status": "approved",
+    "choice": "original"
+  },
+  "phil-nietzsche": {
+    "wikiFile": "Nietzsche187a.jpg",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Nietzsche187a.jpg",
+    "credit": "Friedrich Hermann Hartmann",
+    "license": "Public domain",
+    "nonFree": false,
+    "status": "approved",
+    "choice": "original"
+  },
+  "phil-plato": {
+    "wikiFile": "Plato_Silanion_Musei_Capitolini_MC1377.png",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Plato_Silanion_Musei_Capitolini_MC1377.png",
+    "credit": "Marie-Lan Nguyen",
+    "license": "Public domain",
+    "nonFree": false,
+    "status": "approved",
+    "choice": "original"
+  },
+  "phil-sartre": {
+    "wikiFile": "Jean_Paul_Sartre_1965.jpg",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Jean_Paul_Sartre_1965.jpg",
+    "credit": "Unknown authorUnknown author",
+    "license": "CC BY-SA 3.0 nl",
+    "nonFree": false,
+    "status": "approved",
+    "choice": "original"
+  },
+  "phil-socrates": {
+    "wikiFile": "Socrates_Louvre.jpg",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Socrates_Louvre.jpg",
+    "credit": "Copy of Lysippos (?)",
+    "license": "Public domain",
+    "nonFree": false,
+    "status": "approved",
+    "choice": "original"
+  },
+  "tool-adjwrench": {
+    "wikiFile": "Adjustablewrenches.jpg",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Adjustablewrenches.jpg",
+    "credit": "Theresemk",
+    "license": "CC BY 3.0",
+    "nonFree": false,
+    "status": "approved",
+    "choice": "original"
+  },
+  "tool-chisel": {
+    "wikiFile": "Neolithic_chisels_4100-2700_BC.jpg",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Neolithic_chisels_4100-2700_BC.jpg",
+    "credit": "Bullenwächter",
+    "license": "CC BY 3.0",
+    "nonFree": false,
+    "status": "approved",
+    "choice": "original"
+  },
+  "tool-claw": {
+    "wikiFile": "Melencolia_I_(Durero)_hammer_crop.jpg",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Melencolia_I_(Durero)_hammer_crop.jpg",
+    "credit": "Albrecht Dürer",
+    "license": "Public domain",
+    "nonFree": false,
+    "status": "approved",
+    "choice": "original"
+  },
+  "tool-hacksaw": {
+    "status": "approved",
+    "choice": "custom"
+  },
+  "tool-handsaw": {
+    "wikiFile": "Pily_platnice.jpg",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Pily_platnice.jpg",
+    "credit": "Mnemosine",
+    "license": "Public domain",
+    "nonFree": false,
+    "status": "approved",
+    "choice": "original"
+  },
+  "tool-level": {
+    "wikiFile": "DetalleNivelDeBurbuja.jpg",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:DetalleNivelDeBurbuja.jpg",
+    "credit": "aTarom",
+    "license": "Public domain",
+    "nonFree": false,
+    "status": "approved",
+    "choice": "original"
+  },
+  "tool-plane": {
+    "status": "rejected",
+    "choice": null
+  },
+  "tool-pliers": {
+    "wikiFile": "Ferreiro_ou_metalúrgico_tradicional.jpg",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Ferreiro_ou_metal%C3%BArgico_tradicional.jpg",
+    "credit": "Wagner Gomes",
+    "license": "CC BY-SA 4.0",
+    "nonFree": false,
+    "status": "approved",
+    "choice": "original"
+  },
+  "tool-tapemeasure": {
+    "wikiFile": "Tape_Measure_25'_Klein_Tools.jpg",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Tape_Measure_25%27_Klein_Tools.jpg",
+    "credit": "Klein Tools",
+    "license": "CC BY-SA 4.0",
+    "nonFree": false,
+    "status": "approved",
+    "choice": "original"
+  },
+  "tool-vise": {
+    "status": "rejected",
+    "choice": null
+  }
+}
