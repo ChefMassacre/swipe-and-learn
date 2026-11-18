@@ -8,8 +8,9 @@ import { loadCards, filterCards, hasFlag, readManifest, findFile, cleanImage, ru
 const cards = filterCards(await loadCards());
 const manifest = readManifest();
 const force = hasFlag('--force');
+// Topics marked keepOriginal (like flags) must stay exact, so they skip the AI.
 const todo = cards.filter(
-  (c) => findFile('original', c.id) && manifest[c.id]?.status !== 'approved' && (force || !findFile('cleaned', c.id)),
+  (c) => !c.keepOriginal && findFile('original', c.id) && manifest[c.id]?.status !== 'approved' && (force || !findFile('cleaned', c.id)),
 );
 console.log(`Cleaning ${todo.length} images (already approved cards are skipped)…`);
 

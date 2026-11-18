@@ -6,7 +6,8 @@ Wikipedia photos often show the answer (an Xbox with "XBOX" printed on it). Each
 |---|---|---|
 | 1. Fetch | `npm run images:fetch` | Downloads each card's photo from its Wikipedia article, with the author and license. Free, no key needed. |
 | 2. Clean | `npm run images:clean` | Sends each photo to OpenAI's image editor, which removes names, logos, model numbers and other text and changes nothing else. Needs an OpenAI API key. |
-| 3. Review | `npm run images:review` | Opens a page in your browser. For each card, pick the AI-cleaned version, the original, or upload your own picture, or hide the card. |
+| 3. Review | `npm run images:review` | Opens a page in your browser. For each card, pick the AI-cleaned version, the original, or upload your own picture, or hide the card. The **Gallery** tab shows every approved picture side by side. |
+| (Any time) | `npm run images:normalize` | Re-saves every approved picture in the standard size. Approving already does this; use it for pictures approved before it existed. |
 
 Run them from the project folder (where `package.json` is), in that order. Steps 1 and 2 only do cards that aren't done yet, so you can re-run them after adding cards. Use `-- --only=consoles` (a topic id) or `-- --only=consoles-xbox` (a card id) to limit them, and `-- --force` to redo.
 
@@ -24,6 +25,16 @@ You can skip step 2 entirely and just pick "Original" or upload your own picture
 - Your choices save as you click. They copy the picture into `assets/cards/` and update `src/data/cardImages.ts`.
 - When you're done, commit those files (or send them to Claude) so they ship in the next build.
 
+## Standard size, so every card looks professional
+Every approved picture is saved the same way automatically: **1200×900 (4:3) JPEG**.
+- Photos close to 4:3 are cropped slightly to fill the frame.
+- Objects on a plain background (product shots) are trimmed and centred with even padding on that background, so they all appear at a similar size.
+- Odd shapes (tall portraits, wide panoramas) sit on a soft, blurred copy of themselves instead of black bars.
+- Flags (topics with `keepOriginal: true`) are never cropped or AI-edited, only padded.
+- Small source pictures get a **Low res** tag on the review page. Upload a bigger one for those.
+
+Use the **Gallery** tab to check them all at once. Anything that stands out (a logo, a blurry photo, an odd crop) gets a **🚩 Flag** with a note, then shows up in the **Flagged** tab to fix later.
+
 ## How the app uses them
 - **Release builds** (App Store / Play Store) only include cards with an approved picture.
 - **Development** (`npx expo start`) also shows not-yet-reviewed cards with the live Wikipedia picture and an "Unreviewed image" tag, so you can try new cards first.
@@ -31,7 +42,7 @@ You can skip step 2 entirely and just pick "Original" or upload your own picture
 - The picture credit shows on the "Learn it" screen. Edited Wikipedia photos keep their original license (often CC BY-SA), which is why the credit is kept.
 
 ## Files
-- `scripts/images/` the three scripts
+- `scripts/images/` the scripts (`lib.mjs` holds the size rules in `normalizeImage`)
 - `content/images/manifest.json` your decisions and each photo's credit/license (commit this)
 - `content/images/work/` downloaded and edited versions (not committed)
 - `assets/cards/` approved pictures that ship with the app (commit this)

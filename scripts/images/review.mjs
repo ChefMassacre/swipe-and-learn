@@ -1,7 +1,10 @@
 // Step 3: review page. Opens in your browser at http://localhost:5179
 // For every card you choose the AI-cleaned image, the original, your own upload,
-// or hide the card. Approved images are copied into assets/cards and listed in
-// src/data/cardImages.ts, which ship with the app.
+// or hide the card. Approved images are standardised (1200x900, see
+// normalizeImage in lib.mjs), saved in assets/cards and listed in
+// src/data/cardImages.ts, which ship with the app. The Gallery tab shows every
+// approved card at once, exactly as it looks in the app, so you can spot the
+// odd one out and flag it for a redo.
 //   npm run images:review
 import http from 'node:http';
 import fs from 'node:fs';
@@ -9,7 +12,7 @@ import path from 'node:path';
 import { exec } from 'node:child_process';
 import {
   loadCards, readManifest, writeManifest, findFile, fetchOriginal, cleanImage, approve, unapprove,
-  writeGeneratedTs, removeExisting, extFor, DIRS,
+  writeGeneratedTs, removeExisting, extFor, assetFile, DIRS,
 } from './lib.mjs';
 
 const PORT = Number(process.env.PORT || 5179);
@@ -42,6 +45,9 @@ function cardData() {
       status: m.status ?? 'pending', choice: m.choice ?? null, note: m.note ?? '',
       credit: m.credit, license: m.license, sourceUrl: m.sourceUrl, nonFree: !!m.nonFree,
       original: v('original'), cleaned: v('cleaned'), custom: v('custom'),
+      final: m.status === 'approved' && assetFile(c.id) ? `/img/final/${c.id}?t=${Math.floor(fs.statSync(assetFile(c.id)).mtimeMs)}` : null,
+      quality: m.quality ?? null, flag: m.flag ?? '',
+      fact: c.fact ?? '',
     };
   });
 }
@@ -60,9 +66,9 @@ const server = http.createServer(async (req, res) => {
     }
     if (req.method === 'GET' && url.pathname === '/data') return json(res, 200, cardData());
 
-    const img = url.pathname.match(/^\/img\/(original|cleaned|custom)\/([\w-]+)$/);
+    const img = url.pathname.match(/^\/img\/(original|cleaned|custom|final)\/([\w-]+)$/);
     if (req.method === 'GET' && img) {
-      const f = findFile(img[1], img[2]);
+      const f = img[1] === 'final' ? assetFile(img[2]) : findFile(img[1], img[2]);
       if (!f) return json(res, 404, { error: 'not found' });
       const type = { '.png': 'image/png', '.webp': 'image/webp', '.gif': 'image/gif' }[path.extname(f)] ?? 'image/jpeg';
       res.writeHead(200, { 'content-type': type, 'cache-control': 'no-store' });
@@ -90,13 +96,17 @@ const server = http.createServer(async (req, res) => {
         await cleanImage(card, m.note);
         if (m.status === 'approved' && m.choice === 'cleaned') m.status = 'pending';
       } else if (['cleaned', 'original', 'custom'].includes(action)) {
-        approve(id, action);
+        m.quality = await approve(id, action, { kind: card.keepOriginal ? 'exact' : 'auto' });
         m.status = 'approved';
         m.choice = action;
+        delete m.flag;
         if (action === 'custom') {
           m.customCredit = credit || m.customCredit;
           m.customLicense = license || m.customLicense;
         }
+      } else if (action === 'flag') {
+        if (note) m.flag = note;
+        else delete m.flag;
       } else if (action === 'reject') {
         unapprove(id);
         m.status = 'rejected';
@@ -157,6 +167,19 @@ const PAGE = /* html */ `<!doctype html>
   .row { display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin-top:10px; }
   .row input[type=text] { flex:1; min-width:200px; padding:8px 10px; border:1px solid var(--line); border-radius:10px; }
   .err { color:var(--bad); font-weight:700; }
+  .flagged { background:#FFEDD5; color:#C2410C; }
+  .gallery { display:grid; grid-template-columns:repeat(auto-fill, minmax(220px, 1fr)); gap:14px; }
+  .tile { background:var(--card); border-radius:14px; overflow:hidden; box-shadow:0 4px 14px #1b16400d; border:3px solid transparent; }
+  .tile.is-flagged { border-color:#F97316; }
+  .tile img { display:block; width:100%; aspect-ratio:4/3; object-fit:cover; background:#F4F1EC; }
+  .tile .meta { padding:8px 10px; display:flex; gap:6px; align-items:center; flex-wrap:wrap; }
+  .tile .meta b { flex:1; font-size:14px; }
+  .tag { font-size:11px; font-weight:800; padding:2px 8px; border-radius:999px; background:#F1F0F7; color:var(--muted); }
+  .tag.low { background:#FEF3C7; color:var(--warn); }
+  .tile .flagnote { padding:0 10px 8px; font-size:12px; color:#C2410C; }
+  .tile .acts { display:flex; gap:6px; padding:0 10px 10px; }
+  .tile .acts button { flex:1; padding:6px; font-size:13px; }
+  .help { color:var(--muted); font-size:14px; margin:0; }
 </style></head>
 <body>
 <header>
@@ -168,6 +191,7 @@ const PAGE = /* html */ `<!doctype html>
 <main id="list"></main>
 <script>
 let cards = [], filter = 'pending', topic = '';
+try { filter = localStorage.getItem('filter') || filter; } catch {}
 const $ = (s) => document.querySelector(s);
 const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 
@@ -179,10 +203,20 @@ async function load() {
 }
 
 function render() {
-  const counts = { pending:0, approved:0, rejected:0, all:cards.length };
-  cards.forEach(c => counts[c.status]++);
-  $('#tabs').innerHTML = ['pending','approved','rejected','all'].map(f => '<button class="'+(f===filter?'on':'')+'" onclick="setFilter(\\''+f+'\\')">'+f[0].toUpperCase()+f.slice(1)+' ('+counts[f]+')</button>').join(' ');
-  const shown = cards.filter(c => (filter==='all' || c.status===filter) && (!topic || c.topicId===topic));
+  const counts = { gallery:0, pending:0, approved:0, rejected:0, flagged:0, all:cards.length };
+  cards.forEach(c => { counts[c.status]++; if (c.flag) counts.flagged++; });
+  counts.gallery = counts.approved;
+  const label = { gallery:'🖼️ Gallery', pending:'Pending', approved:'Approved', rejected:'Rejected', flagged:'🚩 Flagged', all:'All' };
+  $('#tabs').innerHTML = Object.keys(label).map(f => '<button class="'+(f===filter?'on':'')+'" onclick="setFilter(\\''+f+'\\')">'+label[f]+' ('+counts[f]+')</button>').join(' ');
+  const inTopic = (c) => !topic || c.topicId===topic;
+  if (filter === 'gallery') {
+    const shown = cards.filter(c => c.status==='approved' && inTopic(c));
+    $('#count').textContent = shown.length + ' approved';
+    $('#list').innerHTML = '<p class="help">Every approved picture, as it looks on a card. Look for anything that stands out: a logo or name, a blurry or tiny photo, an odd crop, or a picture that doesn\\'t match the others. Flag it to fix later, or open it to pick another version.</p>'+
+      '<div class="gallery">'+shown.map(tileHtml).join('')+'</div>';
+    return;
+  }
+  const shown = cards.filter(c => (filter==='all' || (filter==='flagged' ? c.flag : c.status===filter)) && inTopic(c));
   $('#count').textContent = shown.length + ' shown';
   $('#list').innerHTML = shown.map(cardHtml).join('') || '<p class="muted">Nothing here.</p>';
 }
@@ -200,9 +234,38 @@ function version(c, kind, label) {
     (src && kind==='custom' ? '<input type="file" accept="image/*" onchange="upload(this,\\''+c.id+'\\')">' : '')+'</div>';
 }
 
+function tileHtml(c) {
+  const q = c.quality || {};
+  return '<div class="tile'+(c.flag?' is-flagged':'')+'">'+
+    '<img src="'+c.final+'" alt="'+esc(c.answer)+'" loading="lazy">'+
+    '<div class="meta"><b>'+esc(c.answer)+'</b>'+
+      (q.lowRes ? '<span class="tag low" title="The source picture is small, so it may look soft on a phone">Low res '+q.sourceWidth+'×'+q.sourceHeight+'</span>' : '')+
+      (q.mode ? '<span class="tag" title="How it was fitted to 4:3">'+esc(q.mode)+'</span>' : '')+'</div>'+
+    (c.flag ? '<div class="flagnote">🚩 '+esc(c.flag)+'</div>' : '')+
+    '<div class="acts"><button class="btn sec" onclick="flag(\\''+c.id+'\\')">'+(c.flag?'Edit flag':'🚩 Flag')+'</button>'+
+    '<button class="btn sec" onclick="openCard(\\''+c.id+'\\')">Open</button></div></div>';
+}
+
+async function flag(id) {
+  const c = cards.find(x => x.id === id);
+  const note = prompt('What needs fixing? (Leave empty to remove the flag)', c.flag || 'Shows a logo / too blurry / bad crop');
+  if (note === null) return;
+  await fetch('/action', { method:'POST', headers:{'content-type':'application/json'}, body: JSON.stringify({ id, action:'flag', note: note.trim() }) });
+  await load();
+}
+
+function openCard(id) {
+  const c = cards.find(x => x.id === id);
+  filter = 'all'; topic = c.topicId; render();
+  $('#topic').value = topic;
+  document.getElementById(id)?.scrollIntoView({ behavior:'smooth', block:'start' });
+}
+
 function cardHtml(c) {
   return '<section class="card" id="'+c.id+'">'+
     '<div class="head"><span class="answer">'+esc(c.answer)+'</span><span class="pill '+c.status+'">'+c.status+'</span>'+
+    (c.flag ? '<span class="pill flagged">🚩 '+esc(c.flag)+'</span>' : '')+
+    (c.quality && c.quality.lowRes ? '<span class="pill pending">Low res</span>' : '')+
     '<span class="muted">'+esc(c.topic)+' · '+esc(c.id)+'</span></div>'+
     (c.credit ? '<div class="muted">Original: '+esc(c.credit)+' · '+esc(c.license)+(c.sourceUrl ? ' · <a href="'+esc(c.sourceUrl)+'" target="_blank">source</a>' : '')+'</div>' : '')+
     (c.nonFree ? '<div class="err">This image is not freely licensed. Upload a different picture.</div>' : '')+
@@ -215,7 +278,7 @@ function cardHtml(c) {
     '<span class="err" id="err-'+c.id+'"></span></div></section>';
 }
 
-function setFilter(f) { filter = f; render(); }
+function setFilter(f) { filter = f; try { localStorage.setItem('filter', f); } catch {} render(); }
 $('#topic').onchange = (e) => { topic = e.target.value; render(); };
 
 async function act(btn, id, action) {

@@ -28,7 +28,6 @@ export default function TabsLayout() {
       <Tabs.Screen name="home" options={{ title: 'Home', tabBarIcon: icon('🏠') }} />
       <Tabs.Screen name="explore" options={{ title: 'Explore', tabBarIcon: icon('🗺️') }} />
       <Tabs.Screen name="progress" options={{ title: 'Progress', tabBarIcon: icon('📈') }} />
-      <Tabs.Screen name="compete" options={{ title: 'Compete', tabBarIcon: icon('⚔️') }} />
       <Tabs.Screen name="profile" options={{ title: 'Profile', tabBarIcon: icon('👤') }} />
     </Tabs>
   );

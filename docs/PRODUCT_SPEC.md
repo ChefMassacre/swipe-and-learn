@@ -43,11 +43,22 @@ Simplified SM-2 (Anki's algorithm), in `src/lib/srs.ts`:
 "How did you hear about us" is asked later (after a few sessions), not at sign-up.
 
 ## Tabs
-- **Home**: streak, level/XP, Daily review, Continue last topic, recommended topics ("For you"), Party mode.
-- **Explore**: every topic grouped by category, interests first. Request a topic. Later: a connected, Kinnu-style map.
+- **Home**: streak, level/XP, Daily review, Continue last topic, recommended topics ("For you"), Party mode and Be the host.
+- **Explore**: a zoomable map of categories and topics, with dotted links between similar topics. Request a topic.
 - **Progress**: streak, level, cards seen and mastered, cards due, mastery per topic, recent sessions.
-- **Compete**: Party mode. Later: weekly leagues and friend challenges (need accounts).
-- **Profile**: account, Plus, achievements, interests, settings.
+- **Profile**: account, Plus, achievements, interests, sound and vibration switches.
+
+Leagues and friend challenges are on hold (they need accounts). The Compete tab is gone until then.
+
+## Play modes
+- **Easy**: pick from 4 answers (wrong ones come from the same topic). 6 XP per correct card.
+- **Classic**: guess in your head, flip, swipe. 10 XP.
+- **Type it**: type the answer. 15 XP.
+
+After the reveal, some cards show a **Did you know?** fact. Only genuinely surprising facts we're sure of; a card with no fact beats a card with a dull one.
+
+## Sound and feel
+Short, quiet chimes (made by `scripts/sounds/make.mjs`, nothing to license) for flip, knew it, learn it, skip, wrong, combo milestones (3, 5, 10…) and round complete, plus light vibration taps. Both can be turned off in Profile. Sounds stay silent when the ringer is off and mix with the user's music.
 
 ## Party mode (local multiplayer)
 Inspired by head-to-head game shows, without boards or territories.

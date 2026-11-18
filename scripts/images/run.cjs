@@ -1,6 +1,6 @@
 // Starts an image script with the right Node.js settings, and explains
 // clearly if this computer's Node.js is too old.
-//   node scripts/images/run.cjs fetch|clean|review [options]
+//   node scripts/images/run.cjs fetch|clean|review|normalize [options]
 const { spawnSync } = require('node:child_process');
 const path = require('node:path');
 
@@ -14,8 +14,8 @@ if (major < 22 || (major === 22 && minor < 6)) {
 }
 
 const [step, ...rest] = process.argv.slice(2);
-if (!['fetch', 'clean', 'review'].includes(step)) {
-  console.error('Usage: npm run images:fetch | images:clean | images:review');
+if (!['fetch', 'clean', 'review', 'normalize'].includes(step)) {
+  console.error('Usage: npm run images:fetch | images:clean | images:review | images:normalize');
   process.exit(1);
 }
 

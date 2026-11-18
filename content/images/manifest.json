@@ -6,7 +6,13 @@
     "license": "CC BY-SA 2.0",
     "nonFree": false,
     "status": "approved",
-    "choice": "original"
+    "choice": "original",
+    "quality": {
+      "mode": "fill",
+      "sourceWidth": 1024,
+      "sourceHeight": 681,
+      "lowRes": false
+    }
   },
   "con-bulldozer": {
     "wikiFile": "CatD9T.jpg",
@@ -15,7 +21,13 @@
     "license": "CC BY-SA 2.0",
     "nonFree": false,
     "status": "approved",
-    "choice": "original"
+    "choice": "original",
+    "quality": {
+      "mode": "fill",
+      "sourceWidth": 1024,
+      "sourceHeight": 681,
+      "lowRes": false
+    }
   },
   "con-dumptruck": {
     "wikiFile": "Freightliner_M2_106_6x4_2014_(14240376744).jpg",
@@ -24,7 +36,13 @@
     "license": "CC BY-SA 2.0",
     "nonFree": false,
     "status": "approved",
-    "choice": "original"
+    "choice": "original",
+    "quality": {
+      "mode": "fill",
+      "sourceWidth": 1024,
+      "sourceHeight": 768,
+      "lowRes": false
+    }
   },
   "con-excavator": {
     "wikiFile": "Excavator_Postiguet_Beach_2.jpg",
@@ -33,7 +51,13 @@
     "license": "CC BY-SA 4.0",
     "nonFree": false,
     "status": "approved",
-    "choice": "original"
+    "choice": "original",
+    "quality": {
+      "mode": "fill",
+      "sourceWidth": 1024,
+      "sourceHeight": 646,
+      "lowRes": false
+    }
   },
   "con-grader": {
     "wikiFile": "Grader_2.jpg",
@@ -42,7 +66,13 @@
     "license": "CC0",
     "nonFree": false,
     "status": "approved",
-    "choice": "original"
+    "choice": "original",
+    "quality": {
+      "mode": "blurred",
+      "sourceWidth": 1024,
+      "sourceHeight": 625,
+      "lowRes": false
+    }
   },
   "con-mixer": {
     "wikiFile": "GH-SA.jpg",
@@ -51,7 +81,14 @@
     "license": "CC BY-SA 4.0",
     "nonFree": false,
     "status": "approved",
-    "choice": "original"
+    "choice": "original",
+    "quality": {
+      "mode": "fill",
+      "sourceWidth": 1024,
+      "sourceHeight": 768,
+      "lowRes": false
+    },
+    "flag": "Shows a concrete plant, not a mixer truck"
   },
   "con-roller": {
     "wikiFile": "John_Deere_roller,_U.S._Navy,_Camp_Covington,_NMCB-133,_080928-N-1106H-001.jpg",
@@ -60,7 +97,13 @@
     "license": "Public domain",
     "nonFree": false,
     "status": "approved",
-    "choice": "original"
+    "choice": "original",
+    "quality": {
+      "mode": "fill",
+      "sourceWidth": 1024,
+      "sourceHeight": 731,
+      "lowRes": false
+    }
   },
   "con-skidsteer": {
     "wikiFile": "Bobcat_S650_skid_steer_loader_(15084521732).jpg",
@@ -69,7 +112,14 @@
     "license": "CC BY-SA 2.0",
     "nonFree": false,
     "status": "approved",
-    "choice": "original"
+    "choice": "original",
+    "quality": {
+      "mode": "blurred",
+      "sourceWidth": 1024,
+      "sourceHeight": 631,
+      "lowRes": false
+    },
+    "flag": "\"Bobcat\" text still visible"
   },
   "con-telehandler": {
     "wikiFile": "FEMA_-_10363_-_Photograph_by_Mark_Wolfe_taken_on_08-29-2004_in_Florida.jpg",
@@ -78,7 +128,13 @@
     "license": "Public domain",
     "nonFree": false,
     "status": "approved",
-    "choice": "original"
+    "choice": "original",
+    "quality": {
+      "mode": "fill",
+      "sourceWidth": 1024,
+      "sourceHeight": 681,
+      "lowRes": false
+    }
   },
   "con-towercrane": {
     "wikiFile": "Crane_machine_slewing_platform.svg",
@@ -97,7 +153,13 @@
     "license": "Public domain",
     "nonFree": false,
     "status": "approved",
-    "choice": "cleaned"
+    "choice": "cleaned",
+    "quality": {
+      "mode": "cutout",
+      "sourceWidth": 845,
+      "sourceHeight": 1024,
+      "lowRes": false
+    }
   },
   "consoles-gamecube": {
     "wikiFile": "GameCube-Console-Set.png",
@@ -106,7 +168,13 @@
     "license": "Public domain",
     "nonFree": false,
     "status": "approved",
-    "choice": "cleaned"
+    "choice": "cleaned",
+    "quality": {
+      "mode": "cutout",
+      "sourceWidth": 1024,
+      "sourceHeight": 576,
+      "lowRes": false
+    }
   },
   "consoles-genesis": {
     "wikiFile": "Sega-Mega-Drive-JP-Mk1-Console-Set.jpg",
@@ -115,7 +183,13 @@
     "license": "Public domain",
     "nonFree": false,
     "status": "approved",
-    "choice": "cleaned"
+    "choice": "cleaned",
+    "quality": {
+      "mode": "cutout",
+      "sourceWidth": 1024,
+      "sourceHeight": 512,
+      "lowRes": false
+    }
   },
   "consoles-n64": {
     "wikiFile": "Nintendo-64-wController-L.jpg",
@@ -124,7 +198,13 @@
     "license": "Public domain",
     "nonFree": false,
     "status": "approved",
-    "choice": "cleaned"
+    "choice": "cleaned",
+    "quality": {
+      "mode": "cutout",
+      "sourceWidth": 1024,
+      "sourceHeight": 469,
+      "lowRes": false
+    }
   },
   "consoles-nes": {
     "wikiFile": "NES-Console-Set.png",
@@ -133,7 +213,13 @@
     "license": "Public domain",
     "nonFree": false,
     "status": "approved",
-    "choice": "cleaned"
+    "choice": "cleaned",
+    "quality": {
+      "mode": "cutout",
+      "sourceWidth": 1024,
+      "sourceHeight": 556,
+      "lowRes": false
+    }
   },
   "consoles-ps1": {
     "wikiFile": "Playstation_logo_colour.svg",
@@ -142,7 +228,14 @@
     "license": "Public domain",
     "nonFree": false,
     "status": "approved",
-    "choice": "original"
+    "choice": "original",
+    "quality": {
+      "mode": "cutout",
+      "sourceWidth": 1024,
+      "sourceHeight": 778,
+      "lowRes": false
+    },
+    "flag": "Shows the PlayStation logo, not the console"
   },
   "consoles-ps2": {
     "wikiFile": "Sony_PlayStation_2.png",
@@ -151,7 +244,13 @@
     "license": "CC0",
     "nonFree": false,
     "status": "approved",
-    "choice": "cleaned"
+    "choice": "cleaned",
+    "quality": {
+      "mode": "cutout",
+      "sourceWidth": 1024,
+      "sourceHeight": 634,
+      "lowRes": false
+    }
   },
   "consoles-snes": {
     "wikiFile": "SNES-Mod1-Console-Set.png",
@@ -160,7 +259,13 @@
     "license": "CC BY-SA 3.0",
     "nonFree": false,
     "status": "approved",
-    "choice": "cleaned"
+    "choice": "cleaned",
+    "quality": {
+      "mode": "cutout",
+      "sourceWidth": 1024,
+      "sourceHeight": 531,
+      "lowRes": false
+    }
   },
   "consoles-switch": {
     "wikiFile": "Nintendo_Switch_logo.svg",
@@ -169,7 +274,14 @@
     "license": "Public domain",
     "nonFree": false,
     "status": "approved",
-    "choice": "cleaned"
+    "choice": "cleaned",
+    "quality": {
+      "mode": "cutout",
+      "sourceWidth": 1024,
+      "sourceHeight": 1024,
+      "lowRes": true
+    },
+    "flag": "Shows the Switch logo, not the console"
   },
   "consoles-wii": {
     "wikiFile": "Wii-Console.png",
@@ -178,7 +290,13 @@
     "license": "Public domain",
     "nonFree": false,
     "status": "approved",
-    "choice": "cleaned"
+    "choice": "cleaned",
+    "quality": {
+      "mode": "cutout",
+      "sourceWidth": 1024,
+      "sourceHeight": 1024,
+      "lowRes": false
+    }
   },
   "consoles-xbox": {
     "wikiFile": "Xbox-Console-wDuke-L.png",
@@ -187,7 +305,13 @@
     "license": "Public domain",
     "nonFree": false,
     "status": "approved",
-    "choice": "cleaned"
+    "choice": "cleaned",
+    "quality": {
+      "mode": "cutout",
+      "sourceWidth": 1024,
+      "sourceHeight": 443,
+      "lowRes": false
+    }
   },
   "fab-cashmere": {
     "wikiFile": "Kaschmirschal_1.jpg",
@@ -196,7 +320,13 @@
     "license": "Public domain",
     "nonFree": false,
     "status": "approved",
-    "choice": "original"
+    "choice": "original",
+    "quality": {
+      "mode": "blurred",
+      "sourceWidth": 743,
+      "sourceHeight": 1024,
+      "lowRes": false
+    }
   },
   "fab-corduroy": {
     "wikiFile": "Mansestr.jpg",
@@ -205,7 +335,13 @@
     "license": "CC BY-SA 3.0",
     "nonFree": false,
     "status": "approved",
-    "choice": "original"
+    "choice": "original",
+    "quality": {
+      "mode": "fill",
+      "sourceWidth": 1024,
+      "sourceHeight": 768,
+      "lowRes": false
+    }
   },
   "fab-denim": {
     "wikiFile": "Denim_texture_03.jpg",
@@ -214,7 +350,13 @@
     "license": "CC BY-SA 3.0",
     "nonFree": false,
     "status": "approved",
-    "choice": "original"
+    "choice": "original",
+    "quality": {
+      "mode": "cutout",
+      "sourceWidth": 1024,
+      "sourceHeight": 1023,
+      "lowRes": false
+    }
   },
   "fab-leather": {
     "wikiFile": "Leathertools.jpg",
@@ -223,7 +365,13 @@
     "license": "Public domain",
     "nonFree": false,
     "status": "approved",
-    "choice": "original"
+    "choice": "original",
+    "quality": {
+      "mode": "blurred",
+      "sourceWidth": 685,
+      "sourceHeight": 1024,
+      "lowRes": false
+    }
   },
   "fab-linen": {
     "wikiFile": "Handkerchief.jpg",
@@ -232,7 +380,13 @@
     "license": "Public domain",
     "nonFree": false,
     "status": "approved",
-    "choice": "original"
+    "choice": "original",
+    "quality": {
+      "mode": "cutout",
+      "sourceWidth": 671,
+      "sourceHeight": 606,
+      "lowRes": false
+    }
   },
   "fab-polyester": {
     "wikiFile": "Definition_polyester_ester_group.svg",
@@ -241,16 +395,29 @@
     "license": "CC0",
     "nonFree": false,
     "status": "approved",
-    "choice": "original"
+    "choice": "original",
+    "quality": {
+      "mode": "cutout",
+      "sourceWidth": 1024,
+      "sourceHeight": 650,
+      "lowRes": false
+    },
+    "flag": "Chemical diagram, not fabric"
   },
   "fab-silk": {
     "wikiFile": "Silk_raw_01a.jpg",
     "sourceUrl": "https://commons.wikimedia.org/wiki/File:Silk_raw_01a.jpg",
-    "credit": "Kuebi = Armin Kübelbeck",
+    "credit": "Kuebi = Armin K\u00fcbelbeck",
     "license": "CC BY-SA 3.0",
     "nonFree": false,
     "status": "approved",
-    "choice": "original"
+    "choice": "original",
+    "quality": {
+      "mode": "blurred",
+      "sourceWidth": 683,
+      "sourceHeight": 1024,
+      "lowRes": false
+    }
   },
   "fab-tweed": {
     "wikiFile": "Harris_tweed.jpg",
@@ -259,7 +426,13 @@
     "license": "Public domain",
     "nonFree": false,
     "status": "approved",
-    "choice": "original"
+    "choice": "original",
+    "quality": {
+      "mode": "fill",
+      "sourceWidth": 1024,
+      "sourceHeight": 755,
+      "lowRes": false
+    }
   },
   "fab-velvet": {
     "wikiFile": "Blue_velvet_(cropped).jpg",
@@ -268,7 +441,13 @@
     "license": "CC BY-SA 3.0",
     "nonFree": false,
     "status": "approved",
-    "choice": "original"
+    "choice": "original",
+    "quality": {
+      "mode": "blurred",
+      "sourceWidth": 839,
+      "sourceHeight": 1024,
+      "lowRes": false
+    }
   },
   "fab-wool": {
     "wikiFile": "Royal_Winter_Fair_Wool_2.jpg",
@@ -277,7 +456,13 @@
     "license": "CC BY 2.0",
     "nonFree": false,
     "status": "approved",
-    "choice": "original"
+    "choice": "original",
+    "quality": {
+      "mode": "fill",
+      "sourceWidth": 1024,
+      "sourceHeight": 680,
+      "lowRes": false
+    }
   },
   "phil-aristotle": {
     "wikiFile": "Aristotle_Altemps_Inv8575.jpg",
@@ -286,7 +471,13 @@
     "license": "Public domain",
     "nonFree": false,
     "status": "approved",
-    "choice": "original"
+    "choice": "original",
+    "quality": {
+      "mode": "blurred",
+      "sourceWidth": 765,
+      "sourceHeight": 1024,
+      "lowRes": false
+    }
   },
   "phil-beauvoir": {
     "wikiFile": "Simone_De_Beauvoir_(cropped).jpg",
@@ -295,7 +486,13 @@
     "license": "CC BY-SA 3.0",
     "nonFree": false,
     "status": "approved",
-    "choice": "original"
+    "choice": "original",
+    "quality": {
+      "mode": "blurred",
+      "sourceWidth": 516,
+      "sourceHeight": 689,
+      "lowRes": false
+    }
   },
   "phil-confucius": {
     "wikiFile": "Confucius,_fresco_from_a_Western_Han_tomb_of_Dongping_County,_Shandong_province,_China_(cropped).jpg",
@@ -304,16 +501,28 @@
     "license": "Public domain",
     "nonFree": false,
     "status": "approved",
-    "choice": "original"
+    "choice": "original",
+    "quality": {
+      "mode": "fill",
+      "sourceWidth": 345,
+      "sourceHeight": 322,
+      "lowRes": true
+    }
   },
   "phil-descartes": {
-    "wikiFile": "Frans_Hals_-_Portret_van_René_Descartes.jpg",
+    "wikiFile": "Frans_Hals_-_Portret_van_Ren\u00e9_Descartes.jpg",
     "sourceUrl": "https://commons.wikimedia.org/wiki/File:Frans_Hals_-_Portret_van_Ren%C3%A9_Descartes.jpg",
     "credit": "After Frans Hals",
     "license": "Public domain",
     "nonFree": false,
     "status": "approved",
-    "choice": "original"
+    "choice": "original",
+    "quality": {
+      "mode": "blurred",
+      "sourceWidth": 817,
+      "sourceHeight": 1000,
+      "lowRes": false
+    }
   },
   "phil-kant": {
     "wikiFile": "Immanuel_Kant_-_Gemaelde_1.jpg",
@@ -322,7 +531,13 @@
     "license": "Public domain",
     "nonFree": false,
     "status": "approved",
-    "choice": "original"
+    "choice": "original",
+    "quality": {
+      "mode": "cutout",
+      "sourceWidth": 785,
+      "sourceHeight": 1024,
+      "lowRes": false
+    }
   },
   "phil-marx": {
     "wikiFile": "Karl_Marx_by_John_Jabez_Edwin_Mayall_1875_-_Restored.png",
@@ -331,7 +546,13 @@
     "license": "Public domain",
     "nonFree": false,
     "status": "approved",
-    "choice": "original"
+    "choice": "original",
+    "quality": {
+      "mode": "blurred",
+      "sourceWidth": 692,
+      "sourceHeight": 1024,
+      "lowRes": false
+    }
   },
   "phil-nietzsche": {
     "wikiFile": "Nietzsche187a.jpg",
@@ -340,7 +561,13 @@
     "license": "Public domain",
     "nonFree": false,
     "status": "approved",
-    "choice": "original"
+    "choice": "original",
+    "quality": {
+      "mode": "cutout",
+      "sourceWidth": 755,
+      "sourceHeight": 1024,
+      "lowRes": false
+    }
   },
   "phil-plato": {
     "wikiFile": "Plato_Silanion_Musei_Capitolini_MC1377.png",
@@ -349,7 +576,13 @@
     "license": "Public domain",
     "nonFree": false,
     "status": "approved",
-    "choice": "original"
+    "choice": "original",
+    "quality": {
+      "mode": "cutout",
+      "sourceWidth": 683,
+      "sourceHeight": 1024,
+      "lowRes": false
+    }
   },
   "phil-sartre": {
     "wikiFile": "Jean_Paul_Sartre_1965.jpg",
@@ -358,7 +591,13 @@
     "license": "CC BY-SA 3.0 nl",
     "nonFree": false,
     "status": "approved",
-    "choice": "original"
+    "choice": "original",
+    "quality": {
+      "mode": "blurred",
+      "sourceWidth": 782,
+      "sourceHeight": 1024,
+      "lowRes": false
+    }
   },
   "phil-socrates": {
     "wikiFile": "Socrates_Louvre.jpg",
@@ -367,7 +606,13 @@
     "license": "Public domain",
     "nonFree": false,
     "status": "approved",
-    "choice": "original"
+    "choice": "original",
+    "quality": {
+      "mode": "cutout",
+      "sourceWidth": 768,
+      "sourceHeight": 1024,
+      "lowRes": false
+    }
   },
   "tool-adjwrench": {
     "wikiFile": "Adjustablewrenches.jpg",
@@ -376,29 +621,53 @@
     "license": "CC BY 3.0",
     "nonFree": false,
     "status": "approved",
-    "choice": "original"
+    "choice": "original",
+    "quality": {
+      "mode": "blurred",
+      "sourceWidth": 734,
+      "sourceHeight": 1024,
+      "lowRes": false
+    }
   },
   "tool-chisel": {
     "wikiFile": "Neolithic_chisels_4100-2700_BC.jpg",
     "sourceUrl": "https://commons.wikimedia.org/wiki/File:Neolithic_chisels_4100-2700_BC.jpg",
-    "credit": "Bullenwächter",
+    "credit": "Bullenw\u00e4chter",
     "license": "CC BY 3.0",
     "nonFree": false,
     "status": "approved",
-    "choice": "original"
+    "choice": "original",
+    "quality": {
+      "mode": "fill",
+      "sourceWidth": 1024,
+      "sourceHeight": 768,
+      "lowRes": false
+    }
   },
   "tool-claw": {
     "wikiFile": "Melencolia_I_(Durero)_hammer_crop.jpg",
     "sourceUrl": "https://commons.wikimedia.org/wiki/File:Melencolia_I_(Durero)_hammer_crop.jpg",
-    "credit": "Albrecht Dürer",
+    "credit": "Albrecht D\u00fcrer",
     "license": "Public domain",
     "nonFree": false,
     "status": "approved",
-    "choice": "original"
+    "choice": "original",
+    "quality": {
+      "mode": "blurred",
+      "sourceWidth": 422,
+      "sourceHeight": 445,
+      "lowRes": true
+    }
   },
   "tool-hacksaw": {
     "status": "approved",
-    "choice": "custom"
+    "choice": "custom",
+    "quality": {
+      "mode": "cutout",
+      "sourceWidth": 447,
+      "sourceHeight": 447,
+      "lowRes": true
+    }
   },
   "tool-handsaw": {
     "wikiFile": "Pily_platnice.jpg",
@@ -407,7 +676,13 @@
     "license": "Public domain",
     "nonFree": false,
     "status": "approved",
-    "choice": "original"
+    "choice": "original",
+    "quality": {
+      "mode": "blurred",
+      "sourceWidth": 622,
+      "sourceHeight": 1024,
+      "lowRes": false
+    }
   },
   "tool-level": {
     "wikiFile": "DetalleNivelDeBurbuja.jpg",
@@ -416,20 +691,32 @@
     "license": "Public domain",
     "nonFree": false,
     "status": "approved",
-    "choice": "original"
+    "choice": "original",
+    "quality": {
+      "mode": "cutout",
+      "sourceWidth": 1024,
+      "sourceHeight": 768,
+      "lowRes": false
+    }
   },
   "tool-plane": {
     "status": "rejected",
     "choice": null
   },
   "tool-pliers": {
-    "wikiFile": "Ferreiro_ou_metalúrgico_tradicional.jpg",
+    "wikiFile": "Ferreiro_ou_metal\u00fargico_tradicional.jpg",
     "sourceUrl": "https://commons.wikimedia.org/wiki/File:Ferreiro_ou_metal%C3%BArgico_tradicional.jpg",
     "credit": "Wagner Gomes",
     "license": "CC BY-SA 4.0",
     "nonFree": false,
     "status": "approved",
-    "choice": "original"
+    "choice": "original",
+    "quality": {
+      "mode": "fill",
+      "sourceWidth": 1024,
+      "sourceHeight": 731,
+      "lowRes": false
+    }
   },
   "tool-tapemeasure": {
     "wikiFile": "Tape_Measure_25'_Klein_Tools.jpg",
@@ -438,7 +725,13 @@
     "license": "CC BY-SA 4.0",
     "nonFree": false,
     "status": "approved",
-    "choice": "original"
+    "choice": "original",
+    "quality": {
+      "mode": "cutout",
+      "sourceWidth": 1000,
+      "sourceHeight": 1000,
+      "lowRes": false
+    }
   },
   "tool-vise": {
     "status": "rejected",

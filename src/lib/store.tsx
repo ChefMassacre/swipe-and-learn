@@ -1,6 +1,7 @@
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { CardState, Grade, review, nextStreak, dayKey } from './srs';
+import { setFeedbackPrefs } from './feedback';
 
 // All user data lives on the device for now. When accounts land (Google
 // sign-in), this same shape syncs to the backend. See docs/PRODUCT_SPEC.md.
@@ -22,6 +23,8 @@ export type SessionRecord = {
   xp: number;
 };
 
+export type Settings = { sound: boolean; haptics: boolean };
+
 export type AppState = {
   profile: Profile;
   cards: Record<string, CardState>;
@@ -32,6 +35,7 @@ export type AppState = {
   history: SessionRecord[];
   plus: boolean; // paid tier; toggled by hand until purchases are wired up
   topicRequests: string[];
+  settings: Settings;
 };
 
 const DEFAULT: AppState = {
@@ -44,11 +48,13 @@ const DEFAULT: AppState = {
   history: [],
   plus: false,
   topicRequests: [],
+  settings: { sound: true, haptics: true },
 };
 
 const KEY = 'app-state:v1';
 
-export const XP = { knew: 10, forgot: 4, skip: 0, typedBonus: 5 };
+// Easy mode (multiple choice) earns a little less than recalling the answer.
+export const XP = { knew: 10, forgot: 4, skip: 0, typedBonus: 5, easyKnew: 6 };
 
 type Ctx = {
   state: AppState;
@@ -58,6 +64,7 @@ type Ctx = {
   finishSession: (r: Omit<SessionRecord, 'at'>) => void;
   setPlus: (on: boolean) => void;
   requestTopic: (name: string) => void;
+  setSettings: (p: Partial<Settings>) => void;
   reset: () => void;
 };
 
@@ -71,7 +78,10 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     AsyncStorage.getItem(KEY)
       .then((raw) => {
-        if (raw) setState({ ...DEFAULT, ...JSON.parse(raw) });
+        if (raw) {
+          const saved = JSON.parse(raw);
+          setState({ ...DEFAULT, ...saved, settings: { ...DEFAULT.settings, ...saved.settings } });
+        }
       })
       .catch(() => {})
       .finally(() => {
@@ -84,6 +94,8 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
     if (!loaded.current) return;
     AsyncStorage.setItem(KEY, JSON.stringify(state)).catch(() => {});
   }, [state]);
+
+  useEffect(() => setFeedbackPrefs(state.settings), [state.settings]);
 
   const setProfile = useCallback(
     (p: Partial<Profile>) => setState((s) => ({ ...s, profile: { ...s.profile, ...p } })),
@@ -111,11 +123,15 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
     (name: string) => setState((s) => ({ ...s, topicRequests: [...s.topicRequests, name] })),
     [],
   );
-  const reset = useCallback(() => setState(DEFAULT), []);
+  const setSettings = useCallback(
+    (p: Partial<Settings>) => setState((s) => ({ ...s, settings: { ...s.settings, ...p } })),
+    [],
+  );
+  const reset = useCallback(() => setState((s) => ({ ...DEFAULT, settings: s.settings })), []);
 
   const value = useMemo(
-    () => ({ state, ready, setProfile, grade, finishSession, setPlus, requestTopic, reset }),
-    [state, ready, setProfile, grade, finishSession, setPlus, requestTopic, reset],
+    () => ({ state, ready, setProfile, grade, finishSession, setPlus, requestTopic, setSettings, reset }),
+    [state, ready, setProfile, grade, finishSession, setPlus, requestTopic, setSettings, reset],
   );
   return <StoreContext.Provider value={value}>{children}</StoreContext.Provider>;
 }

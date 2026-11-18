@@ -8,6 +8,7 @@
     "@react-native-async-storage/async-storage": "2.2.0",
     "@supabase/supabase-js": "^2.119.0",
     "expo": "~58.0.26",
+    "expo-audio": "~58.0.12",
     "expo-constants": "~58.0.16",
     "expo-font": "~58.0.12",
     "expo-haptics": "~58.0.8",
@@ -27,6 +28,7 @@
   },
   "devDependencies": {
     "@types/react": "~19.3.0",
+    "sharp": "^0.35.5",
     "typescript": "~6.0.3"
   },
   "scripts": {
@@ -35,10 +37,12 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "typecheck": "tsc --noEmit",
-    "test": "node --experimental-strip-types --test src/lib/*.test.ts",
+    "test": "node --experimental-strip-types --no-warnings --test src/lib/*.test.ts",
     "images:fetch": "node scripts/images/run.cjs fetch",
     "images:clean": "node scripts/images/run.cjs clean",
-    "images:review": "node scripts/images/run.cjs review"
+    "images:review": "node scripts/images/run.cjs review",
+    "images:normalize": "node scripts/images/run.cjs normalize",
+    "sounds": "node scripts/sounds/make.mjs"
   },
   "private": true
 }

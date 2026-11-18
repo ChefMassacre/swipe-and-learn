@@ -3,7 +3,7 @@ import { ActivityIndicator, Platform, Pressable, StyleSheet, Text, View } from '
 import { router, useLocalSearchParams } from 'expo-router';
 import { Image } from 'expo-image';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import * as Haptics from 'expo-haptics';
+import { feedback } from '../../lib/feedback';
 import { cardById, playableTopics } from '../../data/topics';
 import { shuffle } from '../../lib/srs';
 import { useStore } from '../../lib/store';
@@ -321,9 +321,7 @@ function BigButton({ title, onPress }: { title: string; onPress: () => void }) {
 }
 
 function buzz(kind: 'light' | 'success' | 'error') {
-  if (Platform.OS === 'web') return;
-  if (kind === 'light') Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium).catch(() => {});
-  else Haptics.notificationAsync(kind === 'success' ? Haptics.NotificationFeedbackType.Success : Haptics.NotificationFeedbackType.Error).catch(() => {});
+  feedback(kind === 'success' ? 'knew' : kind === 'error' ? 'wrong' : 'tap');
 }
 
 const styles = StyleSheet.create({

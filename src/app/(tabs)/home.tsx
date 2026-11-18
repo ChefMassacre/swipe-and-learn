@@ -96,6 +96,16 @@ export default function Home() {
             <Text style={{ fontSize: 26, color: colors.gold, fontFamily: F.black }}>›</Text>
           </Card>
         </Pressable>
+        <Pressable onPress={() => router.push('/party/host')} accessibilityRole="button">
+          <Card style={styles.host}>
+            <Text style={{ fontSize: 26 }}>📱</Text>
+            <View style={{ flex: 1 }}>
+              <Text style={styles.hostTitle}>Be the host</Text>
+              <Muted style={{ fontSize: 14 }}>Judging a party game? Join with the room code.</Muted>
+            </View>
+            <Text style={{ fontSize: 22, color: colors.muted, fontFamily: F.black }}>›</Text>
+          </Card>
+        </Pressable>
       </ScrollView>
     </SafeAreaView>
   );
@@ -154,5 +164,7 @@ const styles = StyleSheet.create({
   continue: { flexDirection: 'row', alignItems: 'center', gap: 14 },
   contIcon: { width: 60, height: 60, borderRadius: 18, alignItems: 'center', justifyContent: 'center' },
   hscroll: { gap: 12, paddingVertical: 6, paddingHorizontal: 20 },
+  host: { flexDirection: 'row', alignItems: 'center', gap: 14, marginTop: -4 },
+  hostTitle: { fontFamily: F.extra, fontSize: 16, color: colors.ink },
   party: { flexDirection: 'row', alignItems: 'center', gap: 14, backgroundColor: colors.ink, borderColor: colors.ink },
 });

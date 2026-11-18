@@ -6,6 +6,7 @@ import { Button, H1, Kicker, Muted } from '../components/ui';
 import { Confetti, PopIn } from '../components/Confetti';
 import { topicById } from '../data/topics';
 import { useStore } from '../lib/store';
+import { feedback } from '../lib/feedback';
 import { currentStreak, levelFor } from '../lib/srs';
 import { F, colors, radius } from '../lib/theme';
 
@@ -21,6 +22,7 @@ export default function Results() {
   const headline = pct >= 90 ? 'Brilliant!' : pct >= 70 ? 'Nice work!' : pct >= 40 ? 'Getting there!' : 'Great start!';
   const face = pct >= 90 ? '🤩' : pct >= 70 ? '😎' : pct >= 40 ? '💪' : '🌱';
   const shown = useCountUp(pct);
+  useEffect(() => { feedback('complete'); }, []);
 
   return (
     <SafeAreaView style={styles.screen}>

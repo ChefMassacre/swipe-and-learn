@@ -3,7 +3,7 @@ import { ActivityIndicator, Pressable, StyleSheet, Text, TextInput, View } from 
 import { router } from 'expo-router';
 import { Image } from 'expo-image';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import * as Haptics from 'expo-haptics';
+import { feedback } from '../../lib/feedback';
 import { RAW_TOPICS } from '../../data/topicsData';
 import { CARD_IMAGES } from '../../data/cardImages';
 import { hostSyncAvailable, normalizeCode, PartyState, Side, useHostRoom } from '../../lib/partySync';
@@ -62,7 +62,7 @@ export default function Host() {
   }
 
   const judge = (action: 'correct' | 'wrong') => {
-    Haptics.notificationAsync(action === 'correct' ? Haptics.NotificationFeedbackType.Success : Haptics.NotificationFeedbackType.Error).catch(() => {});
+    feedback(action === 'correct' ? 'knew' : 'wrong', { sound: false });
     room.judge(action);
   };
   const live = s.status === 'running' && !s.passing;

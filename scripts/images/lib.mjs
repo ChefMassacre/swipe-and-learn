@@ -1,4 +1,5 @@
-// Shared helpers for the card image pipeline. Node 22+ only, no dependencies.
+// Shared helpers for the card image pipeline. Node 22+ only. Uses sharp
+// (installed by npm install) to standardise approved images.
 // See docs/IMAGES.md for how to use it.
 import fs from 'node:fs';
 import path from 'node:path';
@@ -22,7 +23,9 @@ for (const d of [...Object.values(DIRS), ASSETS]) fs.mkdirSync(d, { recursive: t
 
 export async function loadCards() {
   const mod = await import(pathToFileURL(path.join(ROOT, 'src/data/topicsData.ts')).href);
-  return mod.RAW_TOPICS.flatMap((t) => t.cards.map((c) => ({ ...c, topicId: t.id, topicTitle: t.title, topicEmoji: t.emoji })));
+  return mod.RAW_TOPICS.flatMap((t) =>
+    t.cards.map((c) => ({ ...c, topicId: t.id, topicTitle: t.title, topicEmoji: t.emoji, keepOriginal: !!t.keepOriginal })),
+  );
 }
 
 /** --only=consoles,phil-kant  -> filter by topic id or card id. */
@@ -206,20 +209,126 @@ function friendly(body) {
 
 // ---------- approval ----------
 
-/** Copies the chosen version into assets/cards and regenerates src/data/cardImages.ts. */
-export function approve(id, choice) {
+// ---------- standardising ----------
+
+// Every approved picture is saved the same way, so cards look consistent:
+// 1200x900 (4:3) JPEG. Photos that are close to 4:3 are cropped to fill.
+// Odd shapes sit on a soft blurred copy of themselves. Objects on a plain
+// background are trimmed, centred and padded on that same background.
+export const OUT_W = 1200;
+export const OUT_H = 900;
+const FLAT_BG = '#F4F1EC'; // matches the card's image area in the app
+const LOW_RES_SCALE = 1.5; // upscaled more than this looks soft on a phone
+
+let sharpLib;
+async function getSharp() {
+  if (sharpLib) return sharpLib;
+  try {
+    sharpLib = (await import('sharp')).default;
+  } catch {
+    throw new Error('The image tool needs "sharp". Run npm install in the app folder, then try again.');
+  }
+  return sharpLib;
+}
+
+/**
+ * Looks at the pixels along the image's edges. Returns the most common edge
+ * colour and how much of the edge is that colour (1 = a perfectly plain backdrop).
+ */
+async function borderStats(sharp, buf) {
+  const { data, info } = await sharp(buf).resize(160, 160, { fit: 'fill' }).removeAlpha().raw().toBuffer({ resolveWithObject: true });
+  const px = [];
+  const b = 3;
+  for (let y = 0; y < info.height; y++)
+    for (let x = 0; x < info.width; x++)
+      if (x < b || y < b || x >= info.width - b || y >= info.height - b) {
+        const i = (y * info.width + x) * info.channels;
+        px.push([data[i], data[i + 1], data[i + 2]]);
+      }
+  const median = [0, 1, 2].map((c) => px.map((p) => p[c]).sort((m, n) => m - n)[px.length >> 1]);
+  const plain = px.filter((p) => p.every((v, c) => Math.abs(v - median[c]) <= 18)).length / px.length;
+  const hex = '#' + median.map((v) => v.toString(16).padStart(2, '0')).join('');
+  return { hex, plain };
+}
+
+/**
+ * Writes a standardised copy of `src` to `out`.
+ * kind 'exact' (flags): never cropped or trimmed, centred with padding.
+ */
+export async function normalizeImage(src, out, { kind = 'auto' } = {}) {
+  const sharp = await getSharp();
+  const input = await sharp(src).rotate().toBuffer({ resolveWithObject: true });
+  let buf = input.data;
+  const { width: w0, height: h0, hasAlpha } = input.info;
+  let mode;
+  let bg = FLAT_BG;
+
+  if (kind === 'exact') mode = 'padded';
+  else if (hasAlpha) mode = 'cutout';
+  else {
+    const edge = await borderStats(sharp, buf);
+    if (edge.plain >= 0.6) { mode = 'cutout'; bg = edge.hex; }
+    else mode = Math.abs(w0 / h0 / (OUT_W / OUT_H) - 1) < 0.2 ? 'fill' : 'blurred';
+  }
+
+  if (hasAlpha) buf = await sharp(buf).flatten({ background: bg }).toBuffer();
+  if (mode === 'cutout') {
+    // Cut away the plain border so every object sits at a similar size.
+    try {
+      buf = await sharp(buf).trim({ background: bg, threshold: 14 }).toBuffer();
+    } catch {
+      // Nothing to trim.
+    }
+  }
+  const meta = await sharp(buf).metadata();
+  const fw = meta.width, fh = meta.height;
+
+  let img;
+  let scale;
+  if (mode === 'fill') {
+    scale = Math.max(OUT_W / fw, OUT_H / fh);
+    img = sharp(buf).resize(OUT_W, OUT_H, { fit: 'cover', position: 'centre' });
+  } else {
+    const pad = mode === 'cutout' ? 0.12 : mode === 'padded' ? 0.14 : 0;
+    const boxW = Math.round(OUT_W * (1 - pad)), boxH = Math.round(OUT_H * (1 - pad));
+    scale = Math.min(boxW / fw, boxH / fh);
+    const fg = await sharp(buf).resize(Math.round(fw * scale), Math.round(fh * scale)).toBuffer();
+    const base =
+      mode === 'blurred'
+        ? sharp(buf).resize(OUT_W, OUT_H, { fit: 'cover' }).blur(45).modulate({ brightness: 0.92, saturation: 0.8 })
+        : sharp({ create: { width: OUT_W, height: OUT_H, channels: 3, background: bg } });
+    const baseBuf = await base.jpeg().toBuffer();
+    img = sharp(baseBuf).composite([{ input: fg, gravity: 'centre' }]);
+  }
+  await img.jpeg({ quality: 82, mozjpeg: true }).toFile(out);
+  return { mode, sourceWidth: w0, sourceHeight: h0, lowRes: scale > LOW_RES_SCALE };
+}
+
+// ---------- approval ----------
+
+/** Standardises the chosen version into assets/cards/<id>.jpg. Returns quality info for the manifest. */
+export async function approve(id, choice, opts = {}) {
   const src = findFile(choice, id);
   if (!src) throw new Error(`No ${choice} image for ${id}`);
+  const tmp = path.join(ASSETS, `.${id}.tmp.jpg`);
+  const quality = await normalizeImage(src, tmp, opts);
   for (const f of fs.readdirSync(ASSETS)) if (f.replace(/\.[^.]+$/, '') === id) fs.unlinkSync(path.join(ASSETS, f));
-  fs.copyFileSync(src, path.join(ASSETS, id + path.extname(src)));
+  fs.renameSync(tmp, path.join(ASSETS, id + '.jpg'));
+  return quality;
 }
 
 export function unapprove(id) {
   for (const f of fs.readdirSync(ASSETS)) if (f.replace(/\.[^.]+$/, '') === id) fs.unlinkSync(path.join(ASSETS, f));
 }
 
+/** The file that ships in the app for a card, if any. */
+export function assetFile(id) {
+  const f = fs.readdirSync(ASSETS).find((n) => !n.startsWith('.') && n.replace(/\.[^.]+$/, '') === id);
+  return f ? path.join(ASSETS, f) : null;
+}
+
 export function writeGeneratedTs(manifest) {
-  const assets = new Map(fs.readdirSync(ASSETS).map((f) => [f.replace(/\.[^.]+$/, ''), f]));
+  const assets = new Map(fs.readdirSync(ASSETS).filter((f) => !f.startsWith('.')).map((f) => [f.replace(/\.[^.]+$/, ''), f]));
   const approved = Object.entries(manifest).filter(([id, m]) => m.status === 'approved' && assets.has(id));
   const rejected = Object.entries(manifest).filter(([, m]) => m.status === 'rejected').map(([id]) => id);
   const q = (s) => JSON.stringify(s ?? '');

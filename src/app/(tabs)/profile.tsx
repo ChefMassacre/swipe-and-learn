@@ -5,6 +5,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Button, Card, Chip, H1, H2, Muted } from '../../components/ui';
 import { TOPICS } from '../../data/topics';
 import { useStore } from '../../lib/store';
+import { feedback } from '../../lib/feedback';
 import { currentStreak, isMastered, levelFor } from '../../lib/srs';
 import { F, colors } from '../../lib/theme';
 
@@ -19,7 +20,7 @@ const ACHIEVEMENTS = [
 type Stats = { sessions: number; streak: number; seen: number; mastered: number; level: number };
 
 export default function Profile() {
-  const { state, setProfile, setPlus, reset } = useStore();
+  const { state, setProfile, setPlus, setSettings, reset } = useStore();
   const cards = Object.values(state.cards);
   const stats: Stats = {
     sessions: state.history.length,
@@ -76,6 +77,35 @@ export default function Profile() {
           ))}
         </View>
 
+        <H2>Sound and feel</H2>
+        <Card style={{ gap: 14 }}>
+          <View style={styles.devRow}>
+            <Text style={{ fontSize: 22 }}>🔊</Text>
+            <View style={{ flex: 1 }}>
+              <Text style={styles.devTitle}>Sound effects</Text>
+              <Muted style={{ fontSize: 13 }}>Quiet chimes. Stays silent when your ringer is off.</Muted>
+            </View>
+            <Switch
+              accessibilityLabel="Sound effects"
+              value={state.settings.sound}
+              onValueChange={(on) => { setSettings({ sound: on }); }}
+            />
+          </View>
+          <View style={styles.divider} />
+          <View style={styles.devRow}>
+            <Text style={{ fontSize: 22 }}>📳</Text>
+            <View style={{ flex: 1 }}>
+              <Text style={styles.devTitle}>Vibration</Text>
+              <Muted style={{ fontSize: 13 }}>A light tap when you flip and swipe.</Muted>
+            </View>
+            <Switch
+              accessibilityLabel="Vibration"
+              value={state.settings.haptics}
+              onValueChange={(on) => { setSettings({ haptics: on }); if (on) setTimeout(() => feedback('tap'), 50); }}
+            />
+          </View>
+        </Card>
+
         <H2>Developer</H2>
         <Card style={styles.devRow}>
           <View style={{ flex: 1 }}>
@@ -109,5 +139,6 @@ const styles = StyleSheet.create({
   badgeText: { fontSize: 12, fontFamily: F.bold, color: colors.ink, textAlign: 'center' },
   chips: { flexDirection: 'row', flexWrap: 'wrap', marginHorizontal: -4 },
   devRow: { flexDirection: 'row', alignItems: 'center', gap: 12 },
+  divider: { height: 1.5, backgroundColor: colors.line },
   devTitle: { fontFamily: F.extra, color: colors.ink, fontSize: 15 },
 });

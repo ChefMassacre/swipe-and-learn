@@ -9,6 +9,7 @@ import { canPlay, topicProgress } from '../../lib/selectors';
 import { F, colors, radius } from '../../lib/theme';
 
 const MODES = [
+  { id: 'easy', title: 'Easy', desc: 'Pick from 4 answers. Great for a new topic.' },
   { id: 'flip', title: 'Classic', desc: 'Guess in your head, flip, and swipe.' },
   { id: 'type', title: 'Type it', desc: 'Type the answer. Harder, +5 XP per card.' },
 ] as const;
@@ -17,7 +18,7 @@ export default function TopicDetail() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const { state } = useStore();
   const topic = topicById(id);
-  const [mode, setMode] = useState<'flip' | 'type'>('flip');
+  const [mode, setMode] = useState<'easy' | 'flip' | 'type'>('flip');
   if (!topic) return null;
   const cat = categoryById(topic.categoryId);
   const p = topicProgress(topic, state);

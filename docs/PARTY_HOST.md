@@ -3,7 +3,7 @@
 So nobody can cheat, a neutral host judges answers from their own phone:
 
 1. The game phone (or the TV it's mirrored to) shows the picture and both clocks, plus a 4-letter room code.
-2. The host opens Swipe&Learn › **Compete** › **Be the host** and types the code.
+2. The host opens Swipe&Learn › **Home** › **Be the host** (at the bottom) and types the code.
 3. The host sees the answer (and accepted alternatives) with big **Correct** and **Wrong** buttons. The active player's clock keeps running until the host taps Correct, then it switches sides. Wrong just flashes "Nope" on the game screen.
 4. Players can still Pass on the game phone (3-second penalty).
 
