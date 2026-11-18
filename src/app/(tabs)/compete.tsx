@@ -15,11 +15,17 @@ export default function Compete() {
           <Text style={{ fontSize: 48 }}>🎉</Text>
           <Text style={styles.heroTitle}>Party mode</Text>
           <Text style={styles.heroSub}>
-            Head-to-head on one phone. Each player has their own clock. Name it, tap your side, and the clock flips to your rival. Run out of time and you're out.
+            Head-to-head with a clock for each side. Shout answers at the picture; a host on another phone says when you're right and the clock flips to your rival. Run out of time and you're out.
           </Text>
           <View style={styles.heroBtn}><Text style={styles.heroBtnText}>Play now  ›</Text></View>
         </Pressable>
 
+        <Pressable onPress={() => router.push('/party/host')}>
+          <Card style={{ gap: 6 }}>
+            <H2>📱 Be the host</H2>
+            <Muted>Judging someone else's party game? Join with their room code to see the answers and tap Correct or Wrong.</Muted>
+          </Card>
+        </Pressable>
         <Card style={{ gap: 6, opacity: 0.6 }}>
           <H2>🏆 Weekly leagues</H2>
           <Muted>Earn XP to climb from Bronze to Diamond against players at your level. Coming with accounts.</Muted>

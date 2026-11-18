@@ -5,6 +5,7 @@ import { Button, Chip, Muted } from '../../components/ui';
 import { playableTopics } from '../../data/topics';
 import { useStore } from '../../lib/store';
 import { canPlay } from '../../lib/selectors';
+import { hostSyncAvailable } from '../../lib/partySync';
 import { colors, radius } from '../../lib/theme';
 
 const CLOCKS = [30, 45, 60, 90];
@@ -18,6 +19,7 @@ export default function PartySetup() {
   const [seconds, setSeconds] = useState(45);
   const [picked, setPicked] = useState<string[]>([]);
   const [faceToFace, setFaceToFace] = useState(false);
+  const [judge, setJudge] = useState<'host' | 'self'>(hostSyncAvailable ? 'host' : 'self');
 
   const toggle = (id: string) => setPicked((xs) => (xs.includes(id) ? xs.filter((x) => x !== id) : [...xs, id]));
   const nameA = a.trim() || (teams ? 'Team 1' : 'Player 1');
@@ -27,9 +29,9 @@ export default function PartySetup() {
     <View style={{ flex: 1, backgroundColor: colors.bg }}>
       <ScrollView contentContainerStyle={styles.body}>
         <Muted>
-          Each side has its own clock. When it's your turn, name what's on screen out loud. Got it? Tap your side and the
-          clock switches to your rival. Stuck? Pass, but the answer shows for 3 seconds while your clock keeps ticking.
-          First to run out of time loses the round.
+          Each side has its own clock. When it's your turn, shout answers at the picture. Wrong guesses just burn your time.
+          Once you get it right, the next picture appears and the clock switches to your rival. Stuck? Pass, but the answer
+          shows for 3 seconds while your clock keeps ticking. First to run out of time loses the round.
         </Muted>
 
         <Text style={styles.label}>Play as</Text>
@@ -53,6 +55,23 @@ export default function PartySetup() {
           {topics.map((t) => <Chip key={t.id} label={`${t.emoji} ${t.title}`} selected={picked.includes(t.id)} onPress={() => toggle(t.id)} />)}
         </View>
 
+        <Text style={styles.label}>Who decides if an answer is right?</Text>
+        <View style={styles.chips}>
+          <Chip
+            label="📱  A host on another phone (recommended)"
+            selected={judge === 'host'}
+            onPress={() => hostSyncAvailable && setJudge('host')}
+          />
+          <Chip label="🙋  No host: players tap their own side" selected={judge === 'self'} onPress={() => setJudge('self')} />
+        </View>
+        <Muted style={{ fontSize: 13 }}>
+          {!hostSyncAvailable
+            ? 'Host phones need online play set up first (see docs/PARTY_HOST.md).'
+            : judge === 'host'
+              ? "Someone who isn't playing joins from their phone with a room code. They see the answer and tap Correct or Wrong. Your clock keeps running until they tap Correct."
+              : 'On the honor system: tap your side when you get it. The other side has 3 seconds to tap Undo if they disagree.'}
+        </Muted>
+
         <Text style={styles.label}>Screen layout</Text>
         <View style={styles.chips}>
           <Chip label="📺  Same side / TV" selected={!faceToFace} onPress={() => setFaceToFace(false)} />
@@ -73,7 +92,7 @@ export default function PartySetup() {
           onPress={() =>
             router.push({
               pathname: '/party/play',
-              params: { a: nameA, b: nameB, seconds: String(seconds), topics: picked.join(','), flip: faceToFace ? '1' : '0' },
+              params: { a: nameA, b: nameB, seconds: String(seconds), topics: picked.join(','), flip: faceToFace ? '1' : '0', judge },
             })
           }
         />

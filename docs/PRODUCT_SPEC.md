@@ -52,7 +52,8 @@ Simplified SM-2 (Anki's algorithm), in `src/lib/srs.ts`:
 ## Party mode (local multiplayer)
 Inspired by head-to-head game shows, without boards or territories.
 - Two sides (players or teams) on one phone, each with its own clock (30/45/60/90 s).
-- The active side names the picture out loud, then taps their half of the screen. The next card appears and the clock switches to the other side.
+- The active side shouts answers at the picture. A neutral **host on a second phone** (joined by a 4-letter room code) sees the answer and taps Correct or Wrong. The clock keeps running through wrong guesses and switches sides only on Correct, so nobody can cheat. Sync: Supabase Realtime (see docs/PARTY_HOST.md).
+- No host: players tap their own side; the other side has 3 seconds to Undo. Also used automatically if the host drops out.
 - **Pass**: the answer shows for 3 seconds while your clock keeps running, then a new card.
 - Run out of time and the other side wins the round. Wins are tallied across rounds; the starting side alternates.
 - Layouts: "Same side / TV" (everything upright, for screen mirroring) or "Face to face" (top half rotated for a phone lying between two players).
@@ -60,10 +61,10 @@ Inspired by head-to-head game shows, without boards or territories.
 
 ## Content
 - Each card: answer, accepted aliases, Wikipedia article title, our own 1–2 sentence blurb.
-- Image and long summary come from the Wikipedia REST API at runtime (`/page/summary/{title}`), cached on the device. Wikipedia/Wikimedia images are freely licensed, which avoids most licensing risk for v1.
+- Images: each card's Wikipedia photo is downloaded once, an AI image editor removes names/logos/model numbers that give the answer away, and Isaac approves each one on a local review page (docs/IMAGES.md). Approved images ship inside the app; release builds only include approved cards. Credits and licenses are kept and shown.
+- The longer summary on the Learn screen still comes from Wikipedia at runtime, cached on the device.
 - Isaac edits content in `src/data/topics.ts` (see `docs/CONTENT.md`). Later: AI-drafted topics (an LLM proposes 30 items + blurbs from Wikipedia, a human approves), served from a backend so new topics ship without an app update.
 - **Risk:** celebrity and brand photos. Wikipedia lead images are usually fine, but brand logos are often non-free "fair use" on Wikipedia and can't be reused. Check each card's image license before launch; prefer product photos over logos.
-- Before release, bake each card's image URL and attribution into the content (a build script) instead of calling Wikipedia live, and show attribution (author + license) on the Learn panel.
 
 ## Accounts
 - v1 MVP: guest, progress saved on the device.

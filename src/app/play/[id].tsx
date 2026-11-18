@@ -11,6 +11,8 @@ import { buildSession, answerMatches, Grade, shuffle } from '../../lib/srs';
 import { useStore, XP } from '../../lib/store';
 import { dailyPool } from '../../lib/selectors';
 import { prefetchWiki, useWiki } from '../../lib/wiki';
+import { useCardPicture, CardPicture } from '../../lib/cardImage';
+import { hasApprovedImage } from '../../data/topics';
 import { colors, radius } from '../../lib/theme';
 
 const SESSION_SIZE = 10;
@@ -41,7 +43,7 @@ export default function Play() {
   const swipeRef = useRef<((d: SwipeDir) => void) | null>(null);
 
   useEffect(() => {
-    if (deck) prefetchWiki(deck.slice(index, index + 3).map((cid) => cardById(cid)!.card.wiki));
+    if (deck) prefetchWiki(deck.slice(index, index + 3).filter((cid) => !hasApprovedImage(cid)).map((cid) => cardById(cid)!.card.wiki));
   }, [deck, index]);
 
   if (!deck) return <ActivityIndicator style={{ flex: 1 }} />;
@@ -191,17 +193,12 @@ export default function Play() {
 }
 
 function CardFront({ card, topic, showDaily }: { card: Card; topic: Topic; showDaily: boolean }) {
-  const wiki = useWiki(card.wiki);
+  const pic = useCardPicture(card);
   return (
     <View style={{ flex: 1 }}>
       <View style={styles.imageBox}>
-        {wiki?.image ? (
-          <Image source={{ uri: wiki.image }} style={StyleSheet.absoluteFill} contentFit="contain" transition={150} />
-        ) : wiki ? (
-          <Text style={styles.bigEmoji}>{topic.emoji}</Text>
-        ) : (
-          <ActivityIndicator />
-        )}
+        <Picture pic={pic} emoji={topic.emoji} />
+        {pic.unreviewed && pic.source ? <Text style={styles.unreviewed}>Unreviewed image</Text> : null}
       </View>
       <View style={styles.cardFooter}>
         {showDaily && <Text style={styles.topicTag}>{topic.emoji} {topic.title}</Text>}
@@ -214,15 +211,11 @@ function CardFront({ card, topic, showDaily }: { card: Card; topic: Topic; showD
 }
 
 function CardBack({ card, topic, typedCorrect, typed }: { card: Card; topic: Topic; typedCorrect: boolean | null; typed: string }) {
-  const wiki = useWiki(card.wiki);
+  const pic = useCardPicture(card);
   return (
     <View style={{ flex: 1 }}>
       <View style={[styles.imageBox, { flex: 1 }]}>
-        {wiki?.image ? (
-          <Image source={{ uri: wiki.image }} style={StyleSheet.absoluteFill} contentFit="contain" />
-        ) : (
-          <Text style={styles.bigEmoji}>{topic.emoji}</Text>
-        )}
+        <Picture pic={pic} emoji={topic.emoji} />
       </View>
       <View style={[styles.cardFooter, { flex: 1, justifyContent: 'center' }]}>
         {typedCorrect !== null && (
@@ -241,12 +234,14 @@ function CardBack({ card, topic, typedCorrect, typed }: { card: Card; topic: Top
 
 function LearnPanel({ card, onDone }: { card: Card; onDone: () => void }) {
   const wiki = useWiki(card.wiki);
+  const pic = useCardPicture(card);
   return (
     <View style={{ flex: 1, padding: 16 }}>
       <ScrollView style={styles.learn} contentContainerStyle={{ padding: 20 }}>
         <View style={[styles.imageBox, { height: 220, borderRadius: radius.md }]}>
-          {wiki?.image ? <Image source={{ uri: wiki.image }} style={StyleSheet.absoluteFill} contentFit="contain" /> : null}
+          {pic.source ? <Image source={pic.source} style={StyleSheet.absoluteFill} contentFit="contain" /> : null}
         </View>
+        {pic.credit ? <Text style={styles.credit}>Photo: {pic.credit}</Text> : null}
         <Text style={styles.learnLabel}>Remember this one</Text>
         <Text style={styles.answer}>{card.answer}</Text>
         <Text style={styles.blurb}>{card.blurb}</Text>
@@ -258,6 +253,12 @@ function LearnPanel({ card, onDone }: { card: Card; onDone: () => void }) {
       <Button title="Got it" onPress={onDone} style={{ marginTop: 12 }} />
     </View>
   );
+}
+
+function Picture({ pic, emoji }: { pic: CardPicture; emoji: string }) {
+  if (pic.source) return <Image source={pic.source} style={StyleSheet.absoluteFill} contentFit="contain" transition={150} />;
+  if (pic.ready) return <Text style={styles.bigEmoji}>{emoji}</Text>;
+  return <ActivityIndicator />;
 }
 
 function RoundAction({ label, icon, color, bg, onPress }: { label: string; icon: string; color: string; bg: string; onPress: () => void }) {
@@ -306,4 +307,6 @@ const styles = StyleSheet.create({
   title: { fontSize: 26, fontWeight: '800', color: colors.ink, marginTop: 8 },
   muted: { fontSize: 15, color: colors.muted, textAlign: 'center', lineHeight: 21 },
   bigEmoji: { fontSize: 72 },
+  unreviewed: { position: 'absolute', top: 10, left: 10, backgroundColor: colors.goldSoft, color: '#92400E', fontSize: 11, fontWeight: '800', paddingHorizontal: 8, paddingVertical: 3, borderRadius: 999, overflow: 'hidden' },
+  credit: { fontSize: 11, color: colors.muted, textAlign: 'center', marginTop: 6 },
 });

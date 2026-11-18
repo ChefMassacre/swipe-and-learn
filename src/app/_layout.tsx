@@ -29,6 +29,7 @@ function Root() {
         <Stack.Screen name="paywall" options={{ presentation: 'modal', title: 'Swipe&Learn Plus' }} />
         <Stack.Screen name="party/index" options={{ title: 'Party mode' }} />
         <Stack.Screen name="party/play" options={{ headerShown: false, gestureEnabled: false }} />
+        <Stack.Screen name="party/host" options={{ headerShown: false }} />
       </Stack>
     </>
   );

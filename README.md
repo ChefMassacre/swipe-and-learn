@@ -4,10 +4,12 @@ Swipe through picture cards to learn about the world. Flip, swipe right if you k
 
 - Product spec: [docs/PRODUCT_SPEC.md](docs/PRODUCT_SPEC.md)
 - Editing topics and cards: [docs/CONTENT.md](docs/CONTENT.md)
+- Card pictures (remove names, approve): [docs/IMAGES.md](docs/IMAGES.md)
+- Party mode host phone setup: [docs/PARTY_HOST.md](docs/PARTY_HOST.md)
 
 ## Run it on your phone
 1. Install **Expo Go** on your phone.
-2. On a computer with Node.js 20+:
+2. On a computer with Node.js 22 or newer:
    ```bash
    npm install
    npx expo start

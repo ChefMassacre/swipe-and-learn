@@ -39,3 +39,7 @@ yarn-error.*
 # generated native folders
 /ios
 /android
+
+# Image pipeline working files and secrets
+content/images/work/
+.env
