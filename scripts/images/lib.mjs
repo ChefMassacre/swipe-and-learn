@@ -125,6 +125,29 @@ export const CLEAN_PROMPT = [
   'Do not add any new text, objects or borders.',
 ].join(' ');
 
+let chosenModel = null;
+/** Uses IMAGE_MODEL if set; otherwise asks OpenAI which image models this account has and picks the newest full-size one. */
+export async function pickImageModel(key) {
+  if (process.env.IMAGE_MODEL) return process.env.IMAGE_MODEL;
+  if (chosenModel) return chosenModel;
+  const res = await fetch('https://api.openai.com/v1/models', { headers: { Authorization: `Bearer ${key}` } });
+  if (res.status === 401) throw new Error('OpenAI says the API key is not valid. Check the key in your .env file.');
+  if (!res.ok) throw new Error(`Could not list OpenAI models (${res.status}): ${(await res.text()).slice(0, 200)}`);
+  const ids = ((await res.json()).data ?? []).map((m) => m.id).filter((id) => /^(gpt-image|chatgpt-image)/.test(id));
+  if (!ids.length) {
+    throw new Error('Your OpenAI account has no image-editing model available. You may need to verify your organization at platform.openai.com/settings/organization/general, then try again.');
+  }
+  // Newest version first; full models before "mini"; undated aliases before dated snapshots.
+  const score = (id) => [/mini/.test(id) ? 1 : 0, -(parseFloat((id.match(/image-(\d+(?:\.\d+)?)/) ?? [])[1]) || 0), /\d{4}-\d{2}-\d{2}/.test(id) ? 1 : 0];
+  ids.sort((a, b) => {
+    const [x, y] = [score(a), score(b)];
+    return x[0] - y[0] || x[1] - y[1] || x[2] - y[2] || a.localeCompare(b);
+  });
+  chosenModel = ids[0];
+  console.log(`Using OpenAI image model: ${chosenModel}  (available: ${ids.join(', ')})`);
+  return chosenModel;
+}
+
 /** Sends the original to the image model and saves the edited version. Needs OPENAI_API_KEY. */
 export async function cleanImage(card, note = '') {
   loadEnv();
@@ -133,7 +156,7 @@ export async function cleanImage(card, note = '') {
   const src = findFile('original', card.id);
   if (!src) throw new Error('No original image yet. Run the fetch step first.');
 
-  const model = process.env.IMAGE_MODEL || 'gpt-image-1';
+  const model = await pickImageModel(key);
   const prompt = note ? `${CLEAN_PROMPT} Extra instructions: ${note}` : CLEAN_PROMPT;
   const mime = { '.png': 'image/png', '.webp': 'image/webp' }[path.extname(src)] ?? 'image/jpeg';
 
@@ -157,10 +180,10 @@ export async function cleanImage(card, note = '') {
   if (res.status === 400) {
     // Some models don't accept the optional settings; try again with the basics.
     const body = await res.text();
-    if (/output_format|output_compression|input_fidelity|unknown parameter/i.test(body)) res = await send({});
-    else throw new Error(`OpenAI: ${body.slice(0, 300)}`);
+    if (/output_format|output_compression|input_fidelity|unknown parameter|not supported/i.test(body)) res = await send({});
+    else throw new Error(`OpenAI: ${friendly(body)}`);
   }
-  if (!res.ok) throw new Error(`OpenAI ${res.status}: ${(await res.text()).slice(0, 300)}`);
+  if (!res.ok) throw new Error(`OpenAI ${res.status}: ${friendly(await res.text())}`);
   const json = await res.json();
   const b64 = json.data?.[0]?.b64_json;
   if (!b64) throw new Error('OpenAI returned no image');
@@ -168,6 +191,17 @@ export async function cleanImage(card, note = '') {
   const ext = buf[0] === 0x89 ? '.png' : buf[0] === 0x52 ? '.webp' : '.jpg';
   removeExisting('cleaned', card.id);
   fs.writeFileSync(path.join(DIRS.cleaned, card.id + ext), buf);
+}
+
+function friendly(body) {
+  try {
+    const msg = JSON.parse(body).error?.message ?? body;
+    if (/verif/i.test(msg)) return `${msg} (Verify your organization at platform.openai.com/settings/organization/general.)`;
+    if (/billing|quota|credit/i.test(msg)) return `${msg} (Add credit at platform.openai.com/settings/organization/billing.)`;
+    return msg;
+  } catch {
+    return body.slice(0, 300);
+  }
 }
 
 // ---------- approval ----------

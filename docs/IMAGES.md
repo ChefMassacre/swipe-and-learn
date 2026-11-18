@@ -13,7 +13,8 @@ Run them from the project folder (where `package.json` is), in that order. Steps
 ## One-time setup for step 2
 1. Make an OpenAI account at platform.openai.com, add a payment method, and create an API key under **API keys**.
 2. In the project folder, copy `.env.example` to a new file called `.env` and paste the key after `OPENAI_API_KEY=`.
-3. Cost: OpenAI charges per edited image, roughly a few cents to about 20 cents each depending on the model and quality. 50 cards is a few dollars. Check current prices on OpenAI's pricing page.
+3. The script picks the newest image model your account can use and prints its name. If OpenAI asks you to verify your organization, do that at platform.openai.com › Settings › Organization.
+4. Cost: OpenAI charges per edited image, roughly a few cents to about 20 cents each depending on the model and quality. 50 cards is a few dollars. Check current prices on OpenAI's pricing page.
 
 You can skip step 2 entirely and just pick "Original" or upload your own pictures on the review page.
 

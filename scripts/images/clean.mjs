@@ -21,7 +21,11 @@ await runPool(todo, 2, async (card) => {
   } catch (e) {
     failed.push(`${card.id}: ${e.message}`);
     console.log(`  ✗ ${card.id}  ${e.message}`);
-    if (/OPENAI_API_KEY/.test(e.message)) process.exit(1);
+    // Account-wide problems: stop instead of repeating the same error for every card.
+    if (/OPENAI_API_KEY|not valid|no image-editing model|verif|billing|quota|does not exist|Could not list/i.test(e.message)) {
+      console.log('\nStopping: fix the problem above, then run npm run images:clean again.');
+      process.exit(1);
+    }
   }
 });
 if (failed.length) console.log(`\nFailed:\n  ${failed.join('\n  ')}`);
